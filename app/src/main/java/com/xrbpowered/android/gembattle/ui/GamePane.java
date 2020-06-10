@@ -11,6 +11,7 @@ import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.zoomui.UIContainer;
+import com.xrbpowered.android.zoomui.UIElement;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ public class GamePane extends UIContainer {
 	public final ProgressBar turnTimerProgress;
 	public final BattlePlayerPane humanPlayerPane;
 	public final BattlePlayerPane aiPlayerPane;
+	public final UIElement missileEffectPane;
 
 	private LinearGradient bgFill = new LinearGradient(0, 0, targetWidth, 0,
 			new int[] {0xff373833, 0xff000000, 0xff373833},
@@ -58,6 +60,13 @@ public class GamePane extends UIContainer {
 			}
 		};
 
+		missileEffectPane = new UIElement(this) {
+			@Override
+			public void paint(Canvas canvas) {
+				GemBattle.attackEffects.draw(canvas, paint);
+			}
+		};
+
 		humanPlayerPane.damageText = new DamageTextFloat(this);
 		aiPlayerPane.damageText = new DamageTextFloat(this);
 
@@ -88,6 +97,10 @@ public class GamePane extends UIContainer {
 		GemBattle.popupMessageFloat.setLocation(
 			(getWidth()-GemBattle.popupMessageFloat.getWidth())/2,
 			(getHeight()-GemBattle.popupMessageFloat.getHeight())/2);
+
+		missileEffectPane.setSize(getWidth(), getHeight());
+		missileEffectPane.setLocation(0, 0);
+
 		super.layout();
 	}
 

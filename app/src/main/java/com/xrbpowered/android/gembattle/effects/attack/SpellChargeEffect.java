@@ -2,6 +2,7 @@ package com.xrbpowered.android.gembattle.effects.attack;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PointF;
 
 import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.effects.Effect;
@@ -10,6 +11,7 @@ import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.game.MatchResult;
 import com.xrbpowered.android.gembattle.ui.SpellChargeBubble;
+import com.xrbpowered.android.zoomui.UIElement;
 
 public class SpellChargeEffect extends TimedEffect {
 
@@ -43,7 +45,12 @@ public class SpellChargeEffect extends TimedEffect {
 	public void attack() {
 		attacks--;
 		// TODO attack animation
-		GemBattle.gamePane.getPlayerPane(target).damageText.addDamageText(ui.spell.damage);
+		//GemBattle.gamePane.getPlayerPane(target).damageText.addDamageText(ui.spell.damage);
+		PointF sp = new PointF(ui.localToBaseX(ui.getWidth()/2), ui.localToBaseY(ui.getHeight()/2));
+		UIElement targetPane = GemBattle.gamePane.getPlayerPane(target);
+		PointF tp = new PointF(targetPane.localToBaseX(targetPane.getWidth()/2), 300);
+		Effect missile = new MissileEffect(target, ui.spell.damage, sp, tp, ui.spell.element.color, 1f, 0.75f);
+		GemBattle.attackEffects.addEffect(missile);
 		target.health += ui.spell.damage;
 	}
 

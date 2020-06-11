@@ -8,12 +8,15 @@ import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.particles.ColorTween;
 import com.xrbpowered.android.gembattle.effects.particles.DotParticle;
+import com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo;
 import com.xrbpowered.android.gembattle.effects.particles.Particle;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Spell;
 import com.xrbpowered.android.zoomui.UIElement;
 
 import java.util.Random;
+
+import static com.xrbpowered.android.gembattle.ui.RenderUtils.lerp;
 
 public class MissileEffect extends Particle {
 
@@ -25,8 +28,11 @@ public class MissileEffect extends Particle {
 
 	public static class Properties {
 		public int color;
-		public float scale;
-		public float duration;
+		public float scale = 1f;
+		public float duration = 1f;
+
+		public GemParticleInfo particleInfo = null;
+		public int particlesPerSecond = 200;
 	}
 
 	private static final Random random = new Random();
@@ -38,6 +44,9 @@ public class MissileEffect extends Particle {
 	private final Properties props;
 	private final float phi, f, amp;
 
+	private float prevx, prevy;
+	private float remParticle = 0f;
+
 	public MissileEffect(BattlePlayer target, Spell spell, PointF sourcePointBase) {
 		this.target = target;
 		this.spell = spell;
@@ -48,6 +57,8 @@ public class MissileEffect extends Particle {
 		UIElement ui = GemBattle.gamePane.attackEffectPane;
 		this.sourcePoint = new PointF(ui.baseToLocalX(sourcePointBase.x), ui.baseToLocalY(sourcePointBase.y));
 		this.targetPoint = new PointF(ui.baseToLocalX(targetPointBase.x), ui.baseToLocalY(targetPointBase.y));
+		prevx = this.sourcePoint.x;
+		prevy = this.sourcePoint.y;
 
 		this.props = spell.missileProps;
 		this.duration = (random.nextFloat()*0.1f+1f)*props.duration;
@@ -58,18 +69,34 @@ public class MissileEffect extends Particle {
 
 	@Override
 	public Effect update(float dt) {
-		ColorTween color = new ColorTween(0xffffffff, props.color & 0xffffff);
 		float ts = tween(s);
-		float x0 = calcX(ts);
-		float y0 = calcY(ts);
-		for(int i=0; i<3; i++) {
-			float d = 250f;
-			float r = random.nextFloat() * (float) Math.PI * 2f;
-			float x1 = x0 + d * (float) Math.cos(r);
-			float y1 = y0 - d * (float) Math.sin(r);
-			Particle p = new DotParticle(x0, y0, x1, y1, 3f, 1f, 2.5f, color);
-			GemBattle.particles.addEffect(p);
+		float newx = calcX(ts);
+		float newy = calcY(ts);
+
+		if(props.particleInfo!=null) {
+			float countf = props.particlesPerSecond * dt + remParticle;
+			int count = (int) countf;
+			remParticle = countf - count;
+
+			for (int i = 0; i < count; i++) {
+				float si = (float) i / count;
+				float x0 = lerp(prevx, newx, si);
+				float y0 = lerp(prevy, newy, si);
+				float d = 250f;
+				float r = random.nextFloat() * (float) Math.PI * 2f;
+				float dx = (float) Math.cos(r);
+				float dy = -(float) Math.sin(r);
+				float x1 = x0 + d * dx;
+				float y1 = y0 + d * dy;
+				x0 += 0.1f * d * dx;
+				y0 += 0.1f * d * dy;
+				Particle p = new DotParticle(x0, y0, x1, y1, 3f, 1f, 2.5f, props.particleInfo.color);
+				GemBattle.particles.addEffect(p);
+			}
 		}
+
+		prevx = newx;
+		prevy = newy;
 
 		return super.update(dt);
 	}

@@ -1,7 +1,6 @@
 package com.xrbpowered.android.gembattle;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 
@@ -24,7 +23,7 @@ public class MainActivity extends Activity {
 		GemBattle.boldFont = ResourcesCompat.getFont(this, R.font.montserrat_black);
 
 		setContentView(R.layout.activity_main);
-		base = (BaseView) findViewById(R.id.baseview);
+		base = findViewById(R.id.baseview);
 		GemBattle.gamePane = new GamePane(new UIFitScaleContainer(base.getContainer(), GamePane.targetWidth, GamePane.targetHeight));
 
 		GemBattle.repaint = new RepaintHandler(base, frameTime);

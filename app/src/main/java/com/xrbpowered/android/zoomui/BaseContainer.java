@@ -7,7 +7,7 @@ import android.view.View;
 
 public class BaseContainer extends UILayersContainer {
 
-	private View view;
+	private final View view;
 
 	protected BaseContainer(View view) {
 		super(null);
@@ -24,7 +24,7 @@ public class BaseContainer extends UILayersContainer {
 	}
 
 	private UIElement uiInitiator = null;
-	private PointF touchStart = new PointF();
+	private final PointF touchStart = new PointF();
 
 	protected boolean invalidLayout = true;
 

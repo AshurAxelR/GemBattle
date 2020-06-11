@@ -87,7 +87,7 @@ public enum Gem {
 		loaded = true;
 	}
 
-	public static Gem[] newGems = {metal, fire, earth, water, air, light};
+	public static final Gem[] newGems = {metal, fire, earth, water, air, light};
 
 	public static Gem getRandom(Random random, Gem replaceSrc, Gem replaceDst) {
 		Gem gem = getRandom(random);

@@ -2,15 +2,11 @@ package com.xrbpowered.android.gembattle.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.xrbpowered.android.gembattle.GemBattle;
-import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
-
-import java.util.Calendar;
 
 public class PopupMessageFloat extends UIElement {
 
@@ -32,8 +28,6 @@ public class PopupMessageFloat extends UIElement {
 		this.message = message;
 		timeStarted = System.currentTimeMillis();
 	}
-
-	private Rect r = new Rect();
 
 	@Override
 	public void paint(Canvas canvas) {

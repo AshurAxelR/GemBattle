@@ -5,7 +5,8 @@ import android.graphics.Canvas;
 import java.util.ArrayList;
 
 public class UIContainer extends UIElement {
-	protected ArrayList<UIElement> children = new ArrayList<>();
+
+	protected final ArrayList<UIElement> children = new ArrayList<>();
 
 	public UIContainer(UIContainer parent) {
 		super(parent);

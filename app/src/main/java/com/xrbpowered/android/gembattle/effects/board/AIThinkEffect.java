@@ -3,6 +3,7 @@ package com.xrbpowered.android.gembattle.effects.board;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.TimedEffect;
 import com.xrbpowered.android.gembattle.game.AILogic;
 import com.xrbpowered.android.gembattle.game.Board;
@@ -26,7 +27,7 @@ public class AIThinkEffect extends TimedEffect {
 	}
 
 	@Override
-	public TimedEffect finish() {
+	public Effect finish() {
 		if(aiSwitch!=null)
 			return new SwitchGemEffect(board, aiSwitch);
 		else

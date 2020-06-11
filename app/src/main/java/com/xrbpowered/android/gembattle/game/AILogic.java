@@ -16,7 +16,7 @@ public class AILogic {
 
 	public final AILogic next;
 
-	public SwitchGem switchGem = new SwitchGem();
+	public final SwitchGem switchGem = new SwitchGem();
 	public Integer maxValue;
 
 	private BattlePlayer player;
@@ -87,7 +87,7 @@ public class AILogic {
 
 	private boolean checkMove(int x, int y, Dir d) {
 		pad2.switchGem(x, y, x+d.dx, y+d.dy);
-		boolean res = match.find();
+		boolean res = match.check();
 		pad2.switchGem(x+d.dx, y+d.dy, x, y);
 		return res;
 	}

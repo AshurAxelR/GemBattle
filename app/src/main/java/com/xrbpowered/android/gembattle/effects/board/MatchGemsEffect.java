@@ -3,6 +3,7 @@ package com.xrbpowered.android.gembattle.effects.board;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.TimedEffect;
 import com.xrbpowered.android.gembattle.effects.attack.SpellChargeEffect;
 import com.xrbpowered.android.gembattle.game.Board;
@@ -39,7 +40,7 @@ public class MatchGemsEffect extends TimedEffect {
 	}
 
 	@Override
-	public TimedEffect finish() {
+	public Effect finish() {
 		return new DropGemsEffect(match.board, false);
 	}
 
@@ -52,7 +53,7 @@ public class MatchGemsEffect extends TimedEffect {
 			}
 	}
 
-	public static TimedEffect checkMatches(Board board) {
+	public static Effect checkMatches(Board board) {
 		MatchResult match = new MatchResult(board);
 		if (match.find()) {
 			match.board.stopTurnTimer();

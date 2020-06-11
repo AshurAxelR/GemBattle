@@ -1,7 +1,6 @@
 package com.xrbpowered.android.gembattle.ui;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;

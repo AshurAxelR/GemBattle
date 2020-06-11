@@ -3,11 +3,11 @@ package com.xrbpowered.android.gembattle.effects.board;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.TimedEffect;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.game.SwitchGem;
-import com.xrbpowered.android.gembattle.ui.RenderUtils;
 
 import static com.xrbpowered.android.gembattle.ui.RenderUtils.lerp;
 
@@ -19,7 +19,7 @@ public class SwitchGemEffect extends TimedEffect {
 	public final Board board;
 	public final SwitchGem switchGem;
 
-	private Gem sgem, tgem;
+	private final Gem sgem, tgem;
 
 	public SwitchGemEffect(Board board, SwitchGem switchGem) {
 		this(board, switchGem, true);
@@ -42,12 +42,12 @@ public class SwitchGemEffect extends TimedEffect {
 	}
 
 	@Override
-	public TimedEffect finish() {
+	public Effect finish() {
 		board.gems[switchGem.sx][switchGem.sy] = tgem;
 		board.gems[switchGem.tx][switchGem.ty] = sgem;
 
 		if(match) {
-			TimedEffect next = MatchGemsEffect.checkMatches(board);
+			Effect next = MatchGemsEffect.checkMatches(board);
 			return (next!=null) ? next : new SwitchGemEffect(board, switchGem.reverse(), false);
 		}
 

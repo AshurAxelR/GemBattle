@@ -4,17 +4,18 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.board.DropGemsEffect;
+import com.xrbpowered.android.gembattle.effects.board.SwitchGemEffect;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.Dir;
 import com.xrbpowered.android.gembattle.game.SwitchGem;
-import com.xrbpowered.android.gembattle.effects.board.SwitchGemEffect;
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
 
-import static com.xrbpowered.android.gembattle.game.Board.*;
+import static com.xrbpowered.android.gembattle.game.Board.gemSize;
+import static com.xrbpowered.android.gembattle.game.Board.screenSize;
+import static com.xrbpowered.android.gembattle.game.Board.size;
 
 public class BoardPane extends UIElement {
 
@@ -26,10 +27,8 @@ public class BoardPane extends UIElement {
 
 	public Board board;
 
-	private SwitchGem switchGem = new SwitchGem();
+	private final SwitchGem switchGem = new SwitchGem();
 	private Effect effect;
-
-	private PointF touch = new PointF();
 
 	public BoardPane(UIContainer parent, Board board) {
 		super(parent);
@@ -47,7 +46,6 @@ public class BoardPane extends UIElement {
 
 	@Override
 	public boolean onTouchDown(float x, float y) {
-		touch.set(x, y);
 		if(isActive()) {
 			int sx = (int) (x / gemSize);
 			int sy = (int) (y / gemSize);

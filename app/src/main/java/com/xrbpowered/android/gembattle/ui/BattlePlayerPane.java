@@ -20,7 +20,7 @@ public class BattlePlayerPane extends UIContainer {
 		healthBar = new ProgressBar(this, 0xffee0000) {
 			@Override
 			public float getProgress() {
-				return (float)BattlePlayerPane.this.player.health/BattlePlayer.maxHealth;
+				return (float)BattlePlayerPane.this.player.health/BattlePlayerPane.this.player.maxHealth;
 			}
 			@Override
 			public String getText() {

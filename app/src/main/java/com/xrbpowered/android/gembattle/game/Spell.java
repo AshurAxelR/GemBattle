@@ -18,7 +18,7 @@ public class Spell {
 		this.damage = damage;
 
 		this.missileProps.color = element.color;
-		this.missileProps.scale = 1f;
+		this.missileProps.particleInfo = element.particleInfo;
 		this.missileProps.duration = 0.75f;
 	}
 
@@ -31,10 +31,20 @@ public class Spell {
 	}
 
 	private static Spell lance(Gem element) {
-		return new Spell(element.name + " Lance", element, 12, 36);
+		Spell spell = new Spell(element.name + " Lance", element, 12, 36);
+		spell.missileProps.scale = 1.5f;
+		spell.missileProps.duration = 1.2f;
+		return spell;
 	}
 
-	public static final Spell metalShard = new Spell("Metal Shard", Gem.metal, 1, 1);
+	public static final Spell metalShard = new Spell("Metal Shard", Gem.metal, 1, 1) {
+		{
+			this.missileProps.particlesPerSecond = 100;
+			this.missileProps.scale = 0.5f;
+			this.missileProps.color = 0xffffffff;
+			this.missileProps.duration = 0.5f;
+		}
+	};
 
 	public static final Spell fireFlash = flash(Gem.fire);
 	public static final Spell waterFlash = flash(Gem.water);
@@ -42,5 +52,6 @@ public class Spell {
 	public static final Spell airFlash = flash(Gem.air);
 
 	public static final Spell fireLance = lance(Gem.fire);
+	public static final Spell airLance = lance(Gem.air);
 	public static final Spell lightLance = lance(Gem.light);
 }

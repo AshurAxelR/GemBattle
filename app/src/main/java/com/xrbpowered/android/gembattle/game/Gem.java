@@ -8,31 +8,37 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 import com.xrbpowered.android.gembattle.R;
+import com.xrbpowered.android.gembattle.effects.particles.ColorTween;
+import com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo;
+
+import static com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo.*;
 
 import java.util.Random;
 
 public enum Gem {
-	empty(null, 0, 0),
-	metal("Metal", 0xff99979e, R.drawable.gem_metal),
-	fire("Fire", 0xffe14500, R.drawable.gem_fire),
-	water("Water", 0xff006ed5, R.drawable.gem_water),
-	earth("Earth", 0xff69b20a, R.drawable.gem_earth),
-	air("Air", 0xff96e8ff, R.drawable.gem_air),
-	light("Light", 0xfffff7cc, R.drawable.gem_light),
-	dark("Dark", 0xff391859, 0);
+	empty(null, 0, 0, null),
+	metal("Metal", 0xff99979e, R.drawable.gem_metal, metalParticle),
+	fire("Fire", 0xffe14500, R.drawable.gem_fire, fireParticle),
+	water("Water", 0xff006ed5, R.drawable.gem_water, waterParticle),
+	earth("Earth", 0xff69b20a, R.drawable.gem_earth, earthParticle),
+	air("Air", 0xff96e8ff, R.drawable.gem_air, airParticle),
+	light("Light", 0xfffff7cc, R.drawable.gem_light, lightParticle),
+	dark("Dark", 0xff391859, 0, null);
 
 	public static final int bitmapMargin = 10;
 
 	public final String name;
 	public final int color;
 	public final int bitmapId;
+	public final GemParticleInfo particleInfo;
 
 	public Bitmap bitmap = null;
 
-	Gem(String name, int color, int bitmapId) {
+	Gem(String name, int color, int bitmapId, GemParticleInfo particleInfo) {
 		this.name = name;
 		this.color = color;
 		this.bitmapId = bitmapId;
+		this.particleInfo = particleInfo;
 	}
 
 	public void draw(Canvas canvas, float x, float y, Paint paint) {

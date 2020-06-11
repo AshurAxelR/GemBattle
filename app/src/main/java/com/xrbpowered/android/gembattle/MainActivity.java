@@ -11,7 +11,7 @@ import com.xrbpowered.android.zoomui.UIFitScaleContainer;
 
 public class MainActivity extends Activity {
 
-	public static final int frameTime = 25;
+	public static final int frameTime = 15;
 
 	private RepaintHandler repaint;
 

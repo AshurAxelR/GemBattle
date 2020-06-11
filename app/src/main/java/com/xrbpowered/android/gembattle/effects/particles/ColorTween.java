@@ -20,7 +20,7 @@ public class ColorTween {
 			m.r = Color.red(colors[i]) / 255f;
 			m.g = Color.green(colors[i]) / 255f;
 			m.b = Color.blue(colors[i]) / 255f;
-			m.s = s==null ? (float)i/markers.length : s[i];
+			m.s = s==null ? (float)i/(markers.length-1) : s[i];
 			markers[i] = m;
 		}
 	}
@@ -34,12 +34,12 @@ public class ColorTween {
 			Marker m0 = markers[i-1];
 			Marker m1 = markers[i];
 			if(s<=m1.s) {
-				s = lerp(m0.s, m1.s, s);
+				float ms = (s-m0.s)/(m1.s-m0.s);
 				return Color.argb(
-					lerp(m0.a, m1.a, s),
-					lerp(m0.r, m1.r, s),
-					lerp(m0.g, m1.g, s),
-					lerp(m0.b, m1.b, s)
+					lerp(m0.a, m1.a, ms),
+					lerp(m0.r, m1.r, ms),
+					lerp(m0.g, m1.g, ms),
+					lerp(m0.b, m1.b, ms)
 				);
 			}
 		}

@@ -2,16 +2,18 @@ package com.xrbpowered.android.gembattle.game;
 
 public class BattlePlayer {
 
-	public static final int maxHealth = 200;
+	public static final int humanHealth = 150;
+	public static final int aiHealth = 150;
+
 	public static final int spellSlotCount = 6;
 
 	private static final Spell[] humanSpells = {Spell.metalShard, Spell.airFlash, Spell.earthFlash, Spell.lightLance, Spell.waterFlash, Spell.fireFlash};
-	private static final Spell[] aiSpells = {Spell.metalShard, Spell.airFlash, Spell.earthFlash, null, Spell.waterFlash, Spell.fireLance};
+	private static final Spell[] aiSpells = {Spell.metalShard, Spell.airLance, Spell.earthFlash, null, Spell.waterFlash, Spell.fireLance};
 
 	public final Board board;
 	public final boolean human;
 
-	public int health = maxHealth;
+	public int health, maxHealth;
 
 	public final Spell[] spells;
 	public final int[] spellCharge = new int[spellSlotCount];
@@ -22,6 +24,8 @@ public class BattlePlayer {
 		this.board = board;
 		this.human = human;
 		this.spells = human ? humanSpells : aiSpells;
+		this.maxHealth = human ? humanHealth : aiHealth;
+		this.health = maxHealth;
 
 		elementMap = new int[Gem.values().length];
 		for(int i=0; i<elementMap.length; i++)

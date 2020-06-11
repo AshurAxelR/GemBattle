@@ -15,7 +15,6 @@ import com.xrbpowered.android.zoomui.UIElement;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class GamePane extends UIContainer {
 
@@ -26,7 +25,7 @@ public class GamePane extends UIContainer {
 	public final ProgressBar turnTimerProgress;
 	public final BattlePlayerPane humanPlayerPane;
 	public final BattlePlayerPane aiPlayerPane;
-	public final UIElement missileEffectPane;
+	public final UIElement attackEffectPane;
 
 	private final LinearGradient bgFill = new LinearGradient(0, 0, targetWidth, 0,
 			new int[] {0xff373833, 0xff000000, 0xff373833},
@@ -37,6 +36,7 @@ public class GamePane extends UIContainer {
 
 	public GamePane(UIContainer parent) {
 		super(parent);
+		GemBattle.particles = new EffectSet();
 		GemBattle.attackEffects = new EffectSet();
 
 		boardPane = new BoardPane(this, new Board());
@@ -51,7 +51,7 @@ public class GamePane extends UIContainer {
 			}
 			@Override
 			public String getText() {
-				return String.format(Locale.getDefault(), "%.0f", boardPane.board.getTurnTimer());
+				return Integer.toString((int) boardPane.board.getTurnTimer());
 			}
 			@Override
 			public void paint(Canvas canvas) {
@@ -60,9 +60,10 @@ public class GamePane extends UIContainer {
 			}
 		};
 
-		missileEffectPane = new UIElement(this) {
+		attackEffectPane = new UIElement(this) {
 			@Override
 			public void paint(Canvas canvas) {
+				GemBattle.particles.draw(canvas, paint);
 				GemBattle.attackEffects.draw(canvas, paint);
 			}
 		};
@@ -98,13 +99,13 @@ public class GamePane extends UIContainer {
 			(getWidth()-GemBattle.popupMessageFloat.getWidth())/2,
 			(getHeight()-GemBattle.popupMessageFloat.getHeight())/2);
 
-		missileEffectPane.setSize(getWidth(), getHeight());
-		missileEffectPane.setLocation(0, 0);
+		attackEffectPane.setSize(getWidth(), getHeight());
+		attackEffectPane.setLocation(0, 0);
 
 		super.layout();
 	}
 
-	private final static SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+	private final static SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm");
 
 	public void updateTime() {
 		long t = System.currentTimeMillis();
@@ -112,6 +113,7 @@ public class GamePane extends UIContainer {
 			prevt = t;
 		float dt = (t-prevt)/1000f;
 
+		GemBattle.particles.update(dt);
 		GemBattle.attackEffects.update(dt);
 		humanPlayerPane.damageText.updateTime(dt);
 		aiPlayerPane.damageText.updateTime(dt);
@@ -145,7 +147,7 @@ public class GamePane extends UIContainer {
 			paint.setColor(0xff999999);
 			paint.setTextSize(25);
 			paint.setTextAlign(Paint.Align.CENTER);
-			canvas.drawText(String.format(Locale.getDefault(), "You can match %d", boardPane.board.targetMatches), getWidth()/2, getHeight()-50, paint);
+			canvas.drawText(String.format("You can match %d", boardPane.board.targetMatches), getWidth()/2, getHeight()-50, paint);
 		}
 	}
 }

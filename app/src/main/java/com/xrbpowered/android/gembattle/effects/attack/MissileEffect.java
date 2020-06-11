@@ -6,16 +6,16 @@ import android.graphics.PointF;
 
 import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.effects.Effect;
-import com.xrbpowered.android.gembattle.effects.TimedEffect;
+import com.xrbpowered.android.gembattle.effects.particles.ColorTween;
+import com.xrbpowered.android.gembattle.effects.particles.DotParticle;
+import com.xrbpowered.android.gembattle.effects.particles.Particle;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Spell;
 import com.xrbpowered.android.zoomui.UIElement;
 
 import java.util.Random;
 
-import static com.xrbpowered.android.gembattle.ui.RenderUtils.lerp;
-
-public class MissileEffect extends TimedEffect {
+public class MissileEffect extends Particle {
 
 	private static final float minF = 0.5f;
 	private static final float maxF = 2f;
@@ -35,10 +35,7 @@ public class MissileEffect extends TimedEffect {
 	public final Spell spell;
 	public final PointF targetPointBase;
 
-	private final PointF sourcePoint, targetPoint;
-
 	private final Properties props;
-	private final float duration;
 	private final float phi, f, amp;
 
 	public MissileEffect(BattlePlayer target, Spell spell, PointF sourcePointBase) {
@@ -48,7 +45,7 @@ public class MissileEffect extends TimedEffect {
 		UIElement targetPane = GemBattle.gamePane.getPlayerPane(target);
 		this.targetPointBase = new PointF(targetPane.localToBaseX(targetPane.getWidth()/2), 300);
 
-		UIElement ui = GemBattle.gamePane.missileEffectPane;
+		UIElement ui = GemBattle.gamePane.attackEffectPane;
 		this.sourcePoint = new PointF(ui.baseToLocalX(sourcePointBase.x), ui.baseToLocalY(sourcePointBase.y));
 		this.targetPoint = new PointF(ui.baseToLocalX(targetPointBase.x), ui.baseToLocalY(targetPointBase.y));
 
@@ -60,8 +57,21 @@ public class MissileEffect extends TimedEffect {
 	}
 
 	@Override
-	public float getDuration() {
-		return duration;
+	public Effect update(float dt) {
+		ColorTween color = new ColorTween(0xffffffff, props.color & 0xffffff);
+		float ts = tween(s);
+		float x0 = calcX(ts);
+		float y0 = calcY(ts);
+		for(int i=0; i<3; i++) {
+			float d = 250f;
+			float r = random.nextFloat() * (float) Math.PI * 2f;
+			float x1 = x0 + d * (float) Math.cos(r);
+			float y1 = y0 - d * (float) Math.sin(r);
+			Particle p = new DotParticle(x0, y0, x1, y1, 3f, 1f, 2.5f, color);
+			GemBattle.particles.addEffect(p);
+		}
+
+		return super.update(dt);
 	}
 
 	@Override
@@ -77,10 +87,12 @@ public class MissileEffect extends TimedEffect {
 	}
 
 	@Override
-	public void draw(Canvas canvas, Paint paint) {
-		float ts = 0.5f*s + 0.5f*s*s;
-		float x = lerp(sourcePoint.x, targetPoint.x, ts);
-		float y = lerp(sourcePoint.y, targetPoint.y, ts) + wave(ts);
+	protected float calcY(float ts) {
+		return super.calcY(ts) + wave(ts);
+	}
+
+	@Override
+	public void draw(Canvas canvas, float x, float y, float ts, Paint paint) {
 		paint.setStyle(Paint.Style.FILL);
 		paint.setColor(props.color);
 		canvas.drawCircle(x, y, missileRadius*props.scale, paint);

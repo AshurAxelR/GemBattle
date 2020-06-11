@@ -11,7 +11,7 @@ public class BattlePlayer {
 	public final Board board;
 	public final boolean human;
 
-	public int health;
+	public int health = maxHealth;
 
 	public final Spell[] spells;
 	public final int[] spellCharge = new int[spellSlotCount];

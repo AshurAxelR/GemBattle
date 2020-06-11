@@ -13,11 +13,10 @@ public class GemBattle {
 	public static Resources resources;
 	public static Typeface boldFont;
 
-	public static RepaintHandler repaint;
-
 	public static GamePane gamePane;
 	public static PopupMessageFloat popupMessageFloat;
 
+	public static EffectSet particles;
 	public static EffectSet attackEffects;
 
 }

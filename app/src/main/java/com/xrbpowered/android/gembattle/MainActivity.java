@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
 
 	public static final int frameTime = 25;
 
-	private BaseView base = null;
+	private RepaintHandler repaint;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +23,16 @@ public class MainActivity extends Activity {
 		GemBattle.boldFont = ResourcesCompat.getFont(this, R.font.montserrat_black);
 
 		setContentView(R.layout.activity_main);
-		base = findViewById(R.id.baseview);
+		BaseView base = findViewById(R.id.baseview);
 		GemBattle.gamePane = new GamePane(new UIFitScaleContainer(base.getContainer(), GamePane.targetWidth, GamePane.targetHeight));
 
-		GemBattle.repaint = new RepaintHandler(base, frameTime);
+		repaint = new RepaintHandler(base, frameTime);
 	}
 
 	@Override
 	protected void onPause() {
-		if(base!=null) {
-			GemBattle.repaint.setFrameTime(0);
+		if(repaint!=null) {
+			repaint.setFrameTime(0);
 		}
 		super.onPause();
 	}
@@ -40,8 +40,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if(base!=null) {
-			GemBattle.repaint.setFrameTime(frameTime);
+		if(repaint!=null) {
+			repaint.setFrameTime(frameTime);
 		}
 	}
 }

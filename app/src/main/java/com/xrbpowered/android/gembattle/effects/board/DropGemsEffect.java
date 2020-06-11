@@ -4,7 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.xrbpowered.android.gembattle.GemBattle;
+import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.TimedEffect;
+import com.xrbpowered.android.gembattle.effects.WaitEffects;
 import com.xrbpowered.android.gembattle.game.AILogic;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.DropColumn;
@@ -47,11 +49,11 @@ public class DropGemsEffect extends TimedEffect {
 	}
 
 	@Override
-	public TimedEffect finish() {
+	public Effect finish() {
 		for(int x=0; x<size; x++) {
 			columns[x].apply();
 		}
-		TimedEffect next = MatchGemsEffect.checkMatches(board);
+		Effect next = MatchGemsEffect.checkMatches(board);
 
 		if(next==null) {
 			if (!AILogic.checkMoves(board)) {
@@ -59,7 +61,12 @@ public class DropGemsEffect extends TimedEffect {
 				GemBattle.popupMessageFloat.show("No available moves");
 				return new DropGemsEffect(board, true);
 			} else {
-				return endTurn(board, false);
+				return new WaitEffects(GemBattle.attackEffects) {
+					@Override
+					public Effect finish() {
+						return endTurn(board, false);
+					}
+				};
 			}
 		}
 		else {
@@ -80,7 +87,7 @@ public class DropGemsEffect extends TimedEffect {
 		}
 	}
 
-	public static TimedEffect endTurn(Board board, boolean timeOut) {
+	public static Effect endTurn(Board board, boolean timeOut) {
 		board.nextTurn();
 		if(board.player.human) {
 			board.targetMatches = AILogic.targetMatches(board, board.player);

@@ -11,7 +11,6 @@ import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.game.MatchResult;
 import com.xrbpowered.android.gembattle.ui.SpellChargeBubble;
-import com.xrbpowered.android.zoomui.UIElement;
 
 public class SpellChargeEffect extends TimedEffect {
 
@@ -44,18 +43,13 @@ public class SpellChargeEffect extends TimedEffect {
 
 	public void attack() {
 		attacks--;
-		// TODO attack animation
-		//GemBattle.gamePane.getPlayerPane(target).damageText.addDamageText(ui.spell.damage);
 		PointF sp = new PointF(ui.localToBaseX(ui.getWidth()/2), ui.localToBaseY(ui.getHeight()/2));
-		UIElement targetPane = GemBattle.gamePane.getPlayerPane(target);
-		PointF tp = new PointF(targetPane.localToBaseX(targetPane.getWidth()/2), 300);
-		Effect missile = new MissileEffect(target, ui.spell.damage, sp, tp, ui.spell.element.color, 1f, 0.75f);
+		Effect missile = new MissileEffect(target, ui.spell, sp);
 		GemBattle.attackEffects.addEffect(missile);
-		target.health += ui.spell.damage;
 	}
 
 	@Override
-	public TimedEffect update(float dt) {
+	public Effect update(float dt) {
 		float delta = Math.min(dt*speed, remaining);
 		ui.charges += delta;
 		if(ui.charges>=ui.spell.maxCharges) {
@@ -68,17 +62,12 @@ public class SpellChargeEffect extends TimedEffect {
 	}
 
 	@Override
-	public TimedEffect finish() {
+	public Effect finish() {
 		while(attacks>0)
 			attack();
 		player.spellCharge[slot] = (player.spellCharge[slot] + charges) % ui.spell.maxCharges;
 		ui.charges = player.spellCharge[slot];
 		return null;
-	}
-
-	@Override
-	public void draw(Canvas canvas, Paint paint) {
-		super.draw(canvas, paint);
 	}
 
 	public static void applyCharges(BattlePlayer player, BattlePlayer target, Gem element, int matches) {

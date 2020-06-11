@@ -2,15 +2,16 @@ package com.xrbpowered.android.gembattle.game;
 
 public class BattlePlayer {
 
+	public static final int maxHealth = 200;
 	public static final int spellSlotCount = 6;
 
 	private static final Spell[] humanSpells = {Spell.metalShard, Spell.airFlash, Spell.earthFlash, Spell.lightLance, Spell.waterFlash, Spell.fireFlash};
-	private static final Spell[] aiSpells = {Spell.metalShard, Spell.airFlash, Spell.earthFlash, null, Spell.waterFlash, Spell.firelance};
+	private static final Spell[] aiSpells = {Spell.metalShard, Spell.airFlash, Spell.earthFlash, null, Spell.waterFlash, Spell.fireLance};
 
 	public final Board board;
 	public final boolean human;
 
-	public int health = 0;
+	public int health;
 
 	public final Spell[] spells;
 	public final int[] spellCharge = new int[spellSlotCount];
@@ -29,6 +30,14 @@ public class BattlePlayer {
 			if (spells[i] != null)
 				elementMap[spells[i].element.ordinal()] = i;
 		}
+	}
+
+	public void receiveDamage(int damage) {
+		health -= damage;
+		if(health<0)
+			health = 0;
+		if(health>maxHealth)
+			health = maxHealth;
 	}
 
 	public void applyCharges(Gem gem, int charges, BattlePlayer opponent) {

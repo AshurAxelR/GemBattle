@@ -3,8 +3,10 @@ package com.xrbpowered.android.zoomui;
 import android.graphics.Canvas;
 
 public class UIFitScaleContainer extends UIContainer {
+
+	protected final float targetWidth, targetHeight;
+
 	protected float scale = 1f;
-	protected float targetWidth, targetHeight;
 
 	public UIFitScaleContainer(UIContainer parent, float targetWidth, float targetHeight) {
 		super(parent);

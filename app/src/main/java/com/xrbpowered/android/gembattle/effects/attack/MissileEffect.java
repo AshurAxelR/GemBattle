@@ -5,9 +5,10 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 
 import com.xrbpowered.android.gembattle.GemBattle;
+import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.TimedEffect;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
-import com.xrbpowered.android.gembattle.ui.RenderUtils;
+import com.xrbpowered.android.gembattle.game.Spell;
 import com.xrbpowered.android.zoomui.UIElement;
 
 import java.util.Random;
@@ -22,31 +23,37 @@ public class MissileEffect extends TimedEffect {
 	private static final float maxAmp = 300f;
 	private static final float missileRadius = 25f;
 
-	public static final Random random = new Random();
+	public static class Properties {
+		public int color;
+		public float scale;
+		public float duration;
+	}
+
+	private static final Random random = new Random();
 
 	public final BattlePlayer target;
-	public final int spellDamage;
+	public final Spell spell;
 	public final PointF targetPointBase;
 
-	private PointF sourcePoint, targetPoint;
+	private final PointF sourcePoint, targetPoint;
 
-	private int color;
-	private float scale;
-	private float duration;
-	private float phi, f, amp;
+	private final Properties props;
+	private final float duration;
+	private final float phi, f, amp;
 
-	public MissileEffect(BattlePlayer target, int spellDamage, PointF sourcePointBase, PointF targetPointBase, int color, float scale, float duration) {
+	public MissileEffect(BattlePlayer target, Spell spell, PointF sourcePointBase) {
 		this.target = target;
-		this.spellDamage = spellDamage;
-		this.targetPointBase = targetPointBase;
+		this.spell = spell;
+
+		UIElement targetPane = GemBattle.gamePane.getPlayerPane(target);
+		this.targetPointBase = new PointF(targetPane.localToBaseX(targetPane.getWidth()/2), 300);
 
 		UIElement ui = GemBattle.gamePane.missileEffectPane;
 		this.sourcePoint = new PointF(ui.baseToLocalX(sourcePointBase.x), ui.baseToLocalY(sourcePointBase.y));
 		this.targetPoint = new PointF(ui.baseToLocalX(targetPointBase.x), ui.baseToLocalY(targetPointBase.y));
 
-		this.color = color;
-		this.scale = scale;
-		this.duration = (random.nextFloat()*0.1f+1f)*duration;
+		this.props = spell.missileProps;
+		this.duration = (random.nextFloat()*0.1f+1f)*props.duration;
 		phi = random.nextFloat();
 		f = random.nextFloat()*(maxF-minF) + minF;
 		amp = random.nextFloat()*(maxAmp-minAmp) + minAmp;
@@ -58,8 +65,9 @@ public class MissileEffect extends TimedEffect {
 	}
 
 	@Override
-	public TimedEffect finish() {
-		GemBattle.gamePane.getPlayerPane(target).damageText.addDamageText(spellDamage);
+	public Effect finish() {
+		target.receiveDamage(spell.damage);
+		GemBattle.gamePane.getPlayerPane(target).damageText.addDamageText(spell.damage);
 		return null;
 	}
 
@@ -74,7 +82,7 @@ public class MissileEffect extends TimedEffect {
 		float x = lerp(sourcePoint.x, targetPoint.x, ts);
 		float y = lerp(sourcePoint.y, targetPoint.y, ts) + wave(ts);
 		paint.setStyle(Paint.Style.FILL);
-		paint.setColor(color);
-		canvas.drawCircle(x, y, missileRadius*scale, paint);
+		paint.setColor(props.color);
+		canvas.drawCircle(x, y, missileRadius*props.scale, paint);
 	}
 }

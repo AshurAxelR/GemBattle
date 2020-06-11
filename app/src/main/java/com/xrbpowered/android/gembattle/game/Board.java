@@ -53,6 +53,7 @@ public class Board {
 		}
 	}
 
+	@SuppressWarnings("ManualArrayCopy")
 	public void copyTo(Board board) {
 		for(int x=0; x<size; x++)
 			for(int y=0; y<size; y++) {

@@ -51,7 +51,7 @@ public class DamageTextFloat extends UIElement {
 		}
 	}
 
-	public ArrayList<Effect> textFloats = new ArrayList<>();
+	public final ArrayList<Effect> textFloats = new ArrayList<>();
 
 	public DamageTextFloat(UIContainer parent) {
 		super(parent);

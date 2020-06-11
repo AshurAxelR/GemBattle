@@ -28,7 +28,7 @@ public class GamePane extends UIContainer {
 	public final BattlePlayerPane aiPlayerPane;
 	public final UIElement missileEffectPane;
 
-	private LinearGradient bgFill = new LinearGradient(0, 0, targetWidth, 0,
+	private final LinearGradient bgFill = new LinearGradient(0, 0, targetWidth, 0,
 			new int[] {0xff373833, 0xff000000, 0xff373833},
 			new float[] {0f, 0.5f, 1f},
 			Shader.TileMode.CLAMP);
@@ -104,7 +104,7 @@ public class GamePane extends UIContainer {
 		super.layout();
 	}
 
-	private static SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+	private final static SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
 	public void updateTime() {
 		long t = System.currentTimeMillis();

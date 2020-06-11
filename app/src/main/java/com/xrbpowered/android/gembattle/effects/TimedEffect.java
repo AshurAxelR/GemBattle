@@ -11,7 +11,7 @@ public abstract class TimedEffect implements Effect {
 	public abstract float getDuration();
 
 	@Override
-	public TimedEffect update(float dt) {
+	public Effect update(float dt) {
 		float duration = getDuration();
 		time += dt;
 		if(time >=duration) {
@@ -26,7 +26,7 @@ public abstract class TimedEffect implements Effect {
 	}
 
 	@Override
-	public TimedEffect finish() {
+	public Effect finish() {
 		return null;
 	}
 

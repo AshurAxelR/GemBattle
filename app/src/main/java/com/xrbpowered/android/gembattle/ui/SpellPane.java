@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
-import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.zoomui.UIContainer;
 
 import static com.xrbpowered.android.gembattle.ui.SpellChargeBubble.distanceFromPivot;

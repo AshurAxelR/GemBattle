@@ -6,7 +6,6 @@ import android.graphics.PointF;
 
 import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.effects.Effect;
-import com.xrbpowered.android.gembattle.effects.particles.ColorTween;
 import com.xrbpowered.android.gembattle.effects.particles.DotParticle;
 import com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo;
 import com.xrbpowered.android.gembattle.effects.particles.Particle;
@@ -16,7 +15,7 @@ import com.xrbpowered.android.zoomui.UIElement;
 
 import java.util.Random;
 
-import static com.xrbpowered.android.gembattle.ui.RenderUtils.lerp;
+import static com.xrbpowered.android.gembattle.ui.utils.RenderUtils.lerp;
 
 public class MissileEffect extends Particle {
 

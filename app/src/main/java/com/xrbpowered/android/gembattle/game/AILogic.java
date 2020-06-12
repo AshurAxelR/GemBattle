@@ -8,7 +8,7 @@ public class AILogic {
 
 	private static final int aiMaxLimit = 10;
 
-	private static final AILogic ai = new AILogic(2);
+	private static final AILogic ai = new AILogic(1);
 
 	private final Board pad = new Board();
 	private final Board pad2 = new Board();
@@ -51,7 +51,7 @@ public class AILogic {
 		if(deep && next!=null) {
 			next.analyse(pad2, opponent, player, maxLimit, true, countMatches);
 			if(next.maxValue !=null)
-				value -= next.maxValue;
+				value -= next.maxValue / 2;
 		}
 
 		return value;

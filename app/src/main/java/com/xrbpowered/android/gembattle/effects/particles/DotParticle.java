@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
-import com.xrbpowered.android.gembattle.ui.RenderUtils;
+import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 
 public class DotParticle extends Particle {
 

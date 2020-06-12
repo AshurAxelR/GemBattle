@@ -11,11 +11,10 @@ import static com.xrbpowered.android.gembattle.ui.SpellChargeBubble.radius;
 
 public class SpellPane extends UIContainer {
 
-	public static final int pivotx = (int)(distanceFromPivot*Math.cos(Math.PI/6)) + radius + 10;
-	public static final int pivoty = distanceFromPivot + radius + 20;
-
-	public static final int width = pivotx*2;
-	public static final int height = pivoty*2;
+	public static final int width = 350;
+	public static final int height = 400;
+	public static final int pivotx = width/2; // (int)(distanceFromPivot*Math.cos(Math.PI/6)) + radius + 10; // =173
+	public static final int pivoty = height/2; // distanceFromPivot + radius + 20; // =180
 
 	public final SpellChargeBubble[] spells = new SpellChargeBubble[BattlePlayer.spellSlotCount];
 

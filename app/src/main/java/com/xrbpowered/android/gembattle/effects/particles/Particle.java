@@ -6,7 +6,7 @@ import android.graphics.PointF;
 
 import com.xrbpowered.android.gembattle.effects.TimedEffect;
 
-import static com.xrbpowered.android.gembattle.ui.RenderUtils.lerp;
+import static com.xrbpowered.android.gembattle.ui.utils.RenderUtils.lerp;
 
 public abstract class Particle extends TimedEffect {
 

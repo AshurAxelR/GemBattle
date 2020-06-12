@@ -8,8 +8,8 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 import com.xrbpowered.android.gembattle.R;
-import com.xrbpowered.android.gembattle.effects.particles.ColorTween;
 import com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo;
+import com.xrbpowered.android.gembattle.ui.BoardPane;
 
 import static com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo.*;
 
@@ -47,33 +47,33 @@ public enum Gem {
 		else if(color!=0) {
 			paint.setStyle(Paint.Style.FILL);
 			paint.setColor(color);
-			canvas.drawCircle(x + Board.gemSize/2, y + Board.gemSize/2, Board.gemSize/2, paint);
+			canvas.drawCircle(x + BoardPane.gemSize/2, y + BoardPane.gemSize/2, BoardPane.gemSize/2, paint);
 		}
 	}
 
 	public void drawBoard(Canvas canvas, float x, float y, Paint paint) {
-		draw(canvas, x*Board.gemSize, y*Board.gemSize, paint);
+		draw(canvas, x* BoardPane.gemSize, y* BoardPane.gemSize, paint);
 	}
 
 	private static final RectF r = new RectF();
 
 	public void drawFade(Canvas canvas, float x, float y, float s, Paint paint) {
-		float cx = x + Board.gemSize/2;
-		float cy = y + Board.gemSize/2;
+		float cx = x + BoardPane.gemSize/2;
+		float cy = y + BoardPane.gemSize/2;
 		if(bitmap !=null) {
-			float size = s * (Board.gemSize + 2*bitmapMargin);
+			float size = s * (BoardPane.gemSize + 2*bitmapMargin);
 			r.set(cx - size/2, cy - size/2, cx + size/2, cy + size/2);
 			canvas.drawBitmap(bitmap, null, r, paint);
 		}
 		else if(color!=0) {
 			paint.setStyle(Paint.Style.FILL);
 			paint.setColor(color);
-			canvas.drawCircle(x + Board.gemSize/2, y + Board.gemSize/2, Board.gemSize*s/2, paint);
+			canvas.drawCircle(x + BoardPane.gemSize/2, y + BoardPane.gemSize/2, BoardPane.gemSize*s/2, paint);
 		}
 	}
 
 	public void drawFadeBoard(Canvas canvas, float x, float y, float s, Paint paint) {
-		drawFade(canvas, x*Board.gemSize, y*Board.gemSize, s, paint);
+		drawFade(canvas, x* BoardPane.gemSize, y* BoardPane.gemSize, s, paint);
 	}
 
 	private static boolean loaded = false;

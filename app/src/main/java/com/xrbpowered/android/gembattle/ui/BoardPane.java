@@ -9,19 +9,20 @@ import com.xrbpowered.android.gembattle.effects.board.DropGemsEffect;
 import com.xrbpowered.android.gembattle.effects.board.SwitchGemEffect;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.Dir;
+import com.xrbpowered.android.gembattle.game.DropGem;
 import com.xrbpowered.android.gembattle.game.SwitchGem;
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
 
-import static com.xrbpowered.android.gembattle.game.Board.gemSize;
-import static com.xrbpowered.android.gembattle.game.Board.screenSize;
 import static com.xrbpowered.android.gembattle.game.Board.size;
 
 public class BoardPane extends UIElement {
 
 	public static final int marginTop = 120;
+	public static final int gemSize = 120;
+	public static final int screenSize = size * gemSize;
 
-	private static final int switchThreshold = Board.gemSize/2;
+	private static final int switchThreshold = gemSize/2;
 	private static final int diagonalThresholdAngle = 30;
 	private static final float diagonalThreshold = 1f/(float)Math.cos(Math.toRadians(diagonalThresholdAngle));
 
@@ -42,6 +43,12 @@ public class BoardPane extends UIElement {
 
 	public boolean isActive() {
 		return effect==null && board.player.human;
+	}
+
+	public void skip() {
+		if(isActive()) {
+			effect = DropGemsEffect.endTurn(board, false);
+		}
 	}
 
 	@Override
@@ -114,8 +121,8 @@ public class BoardPane extends UIElement {
 			paint.setStyle(Paint.Style.STROKE);
 			paint.setStrokeWidth(4);
 			paint.setColor(0xffffffff);
-			canvas.drawRect(switchGem.sx*Board.gemSize-3, switchGem.sy*Board.gemSize-3,
-					(switchGem.sx+1)*Board.gemSize+3, (switchGem.sy+1)*Board.gemSize+3, paint);
+			canvas.drawRect(switchGem.sx*gemSize-3, switchGem.sy*gemSize-3,
+					(switchGem.sx+1)*gemSize+3, (switchGem.sy+1)*gemSize+3, paint);
 		}
 
 	}

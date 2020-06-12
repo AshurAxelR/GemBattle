@@ -2,7 +2,7 @@ package com.xrbpowered.android.gembattle.effects.particles;
 
 import android.graphics.Color;
 
-import static com.xrbpowered.android.gembattle.ui.RenderUtils.lerp;
+import static com.xrbpowered.android.gembattle.ui.utils.RenderUtils.lerp;
 
 public class ColorTween {
 

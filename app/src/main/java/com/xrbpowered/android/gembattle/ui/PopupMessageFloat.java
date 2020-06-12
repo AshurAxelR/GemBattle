@@ -2,9 +2,9 @@ package com.xrbpowered.android.gembattle.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Rect;
 
 import com.xrbpowered.android.gembattle.GemBattle;
+import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
 

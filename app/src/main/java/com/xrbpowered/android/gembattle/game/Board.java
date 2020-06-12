@@ -7,8 +7,6 @@ public class Board {
 	public static final float turnTime = 30;
 
 	public static final int size = 7;
-	public static final int gemSize = 120;
-	public static final int screenSize = size * gemSize;
 
 	public final Random random = new Random();
 	public final Gem[][] gems = new Gem[size][size];

@@ -8,6 +8,7 @@ import com.xrbpowered.android.gembattle.effects.TimedEffect;
 import com.xrbpowered.android.gembattle.game.AILogic;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.SwitchGem;
+import com.xrbpowered.android.gembattle.ui.BoardPane;
 
 public class AIThinkEffect extends TimedEffect {
 
@@ -40,8 +41,8 @@ public class AIThinkEffect extends TimedEffect {
 			paint.setStyle(Paint.Style.STROKE);
 			paint.setStrokeWidth(4);
 			paint.setColor(0xffffffff);
-			canvas.drawRect(aiSwitch.sx * Board.gemSize - 3, aiSwitch.sy * Board.gemSize - 3,
-					(aiSwitch.sx + 1) * Board.gemSize + 3, (aiSwitch.sy + 1) * Board.gemSize + 3, paint);
+			canvas.drawRect(aiSwitch.sx * BoardPane.gemSize - 3, aiSwitch.sy * BoardPane.gemSize - 3,
+					(aiSwitch.sx + 1) * BoardPane.gemSize + 3, (aiSwitch.sy + 1) * BoardPane.gemSize + 3, paint);
 		}
 	}
 }

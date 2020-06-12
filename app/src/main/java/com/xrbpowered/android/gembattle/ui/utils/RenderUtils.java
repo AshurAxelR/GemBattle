@@ -1,4 +1,4 @@
-package com.xrbpowered.android.gembattle.ui;
+package com.xrbpowered.android.gembattle.ui.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,6 +16,19 @@ public class RenderUtils {
 				(int)(Color.green(color)*s),
 				(int)(Color.blue(color)*s)
 		);
+	}
+
+	public static int lightenColor(int color, float s) {
+		return Color.argb(
+				Color.alpha(color),
+				(int)lerp(Color.red(color), 255, s),
+				(int)lerp(Color.green(color), 255, s),
+				(int)lerp(Color.blue(color), 255, s)
+		);
+	}
+
+	public static int changeBrightness(int color, float scale) {
+		return scale>1f ? lightenColor(color, scale-1f) : darkenColor(color, scale);
 	}
 
 	public static void drawStrokeText(Canvas canvas, String message, float x, float y, Paint paint, int fill, int stroke) {

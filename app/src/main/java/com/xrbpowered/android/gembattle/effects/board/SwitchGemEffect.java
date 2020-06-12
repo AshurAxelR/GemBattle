@@ -9,7 +9,7 @@ import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.game.SwitchGem;
 
-import static com.xrbpowered.android.gembattle.ui.RenderUtils.lerp;
+import static com.xrbpowered.android.gembattle.ui.utils.RenderUtils.lerp;
 
 public class SwitchGemEffect extends TimedEffect {
 

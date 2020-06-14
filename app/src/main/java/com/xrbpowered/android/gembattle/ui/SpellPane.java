@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
+import com.xrbpowered.android.gembattle.game.Spell;
 import com.xrbpowered.android.zoomui.UIContainer;
 
 import static com.xrbpowered.android.gembattle.ui.SpellChargeBubble.distanceFromPivot;
@@ -34,12 +35,15 @@ public class SpellPane extends UIContainer {
 
 	@Override
 	protected void paintSelf(Canvas canvas) {
+		if(!Spell.isLoaded())
+			Spell.loadBitmaps();
+
 		paint.setStyle(Paint.Style.FILL);
-		paint.setColor(0xffc2b890);
+		paint.setColor(0xffede6c8);
 		canvas.drawRect(0, 0, getWidth(), getHeight(), paint);
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(2f);
-		paint.setColor(0xff736d55);
+		paint.setColor(0xff926721);
 		canvas.drawRect(0, 0, getWidth(), getHeight(), paint);
 	}
 }

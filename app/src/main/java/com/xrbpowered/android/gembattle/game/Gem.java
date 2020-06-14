@@ -7,9 +7,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
+import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.R;
 import com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo;
 import com.xrbpowered.android.gembattle.ui.BoardPane;
+import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 
 import static com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo.*;
 
@@ -82,12 +84,10 @@ public enum Gem {
 		return loaded;
 	}
 
-	public static void loadBitmaps(Resources resources) {
-		BitmapFactory.Options opt = new BitmapFactory.Options();
-		opt.inScaled = false;
+	public static void loadBitmaps() {
 		for(Gem gem : values()) {
 			if(gem.bitmapId !=0) {
-				gem.bitmap = BitmapFactory.decodeResource(resources, gem.bitmapId, opt);
+				gem.bitmap = BitmapFactory.decodeResource(GemBattle.resources, gem.bitmapId, RenderUtils.noScale);
 			}
 		}
 		loaded = true;

@@ -13,6 +13,7 @@ public class GemBattle {
 	public static Resources resources;
 	public static Typeface boldFont;
 
+	public static float time = 0f;
 	public static GamePane gamePane;
 	public static PopupMessageFloat popupMessageFloat;
 

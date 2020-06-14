@@ -1,11 +1,15 @@
 package com.xrbpowered.android.gembattle.ui;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 
 import com.xrbpowered.android.gembattle.GemBattle;
+import com.xrbpowered.android.gembattle.R;
 import com.xrbpowered.android.gembattle.effects.EffectSet;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Gem;
@@ -59,7 +63,7 @@ public class GamePane extends UIContainer {
 		skipButton = new GlassButton(this, "Skip") {
 			@Override
 			public boolean isEnabled() {
-				return boardPane.isActive();
+				return boardPane.isActive(); // && !paused;
 			}
 			@Override
 			public void onClick() {
@@ -142,6 +146,7 @@ public class GamePane extends UIContainer {
 		if(prevt==0L)
 			prevt = t;
 		float dt = (t-prevt)/1000f;
+		GemBattle.time += dt;
 
 		GemBattle.particles.update(dt);
 		GemBattle.attackEffects.update(dt);
@@ -155,7 +160,7 @@ public class GamePane extends UIContainer {
 	@Override
 	protected void paintSelf(Canvas canvas) {
 		if(!Gem.isLoaded())
-			Gem.loadBitmaps(GemBattle.resources);
+			Gem.loadBitmaps();
 
 		updateTime();
 

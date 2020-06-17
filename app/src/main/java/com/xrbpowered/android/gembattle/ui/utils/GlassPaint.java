@@ -18,52 +18,37 @@ public class GlassPaint {
 
 	private float height;
 	private int[] colors;
-	private float[] shades;
 	private LinearGradient[] shaders;
 	private int[][] shadeColors;
 	private LinearGradient glass;
 
-	private GlassPaint(UIElement ui, int defaultHeight, int shadesCount) {
+	public GlassPaint(UIElement ui, int defaultHeight, int... colors) {
 		this.ui = ui;
-		shaders = new LinearGradient[shadesCount];
-		shadeColors = new int[shadesCount][];
+		shaders = new LinearGradient[colors.length];
+		shadeColors = new int[colors.length][];
 		this.height = defaultHeight;
+		setColors(colors);
 	}
 
-	public GlassPaint(UIElement ui, int defaultHeight, int[] colors, float[] shades) {
-		this(ui, defaultHeight, shades.length);
-		setColors(colors, shades);
-	}
-
-	public GlassPaint(UIElement ui, int defaultHeight, int color, float[] shades) {
-		this(ui, defaultHeight, shades.length);
-		int[] colors = new int[shades.length];
-		for(int i=0; i<colors.length; i++)
-			colors[i] = color;
-		setColors(colors, shades);
-	}
-
-	private int[] createColorMap(int color, float brightness) {
+	private int[] createColorMap(int color) {
 		int[] colors = new int[4];
-		colors[0] = changeBrightness(color, 0.4f*brightness);
-		colors[1] = changeBrightness(color, 0.6f*brightness);
-		colors[2] = changeBrightness(color, brightness);
-		colors[3] = changeBrightness(color, 0.5f*brightness);
+		colors[0] = changeBrightness(color, 0.4f);
+		colors[1] = changeBrightness(color, 0.6f);
+		colors[2] = changeBrightness(color, 1f);
+		colors[3] = changeBrightness(color, 0.5f);
 		return colors;
 	}
 
-	public void setColor(int shadeIndex, int color, float shade) {
+	public void setColor(int shadeIndex, int color) {
 		this.colors[shadeIndex] = color;
-		this.shades[shadeIndex] = shade;
-		shadeColors[shadeIndex] = createColorMap(color, shade);
+		shadeColors[shadeIndex] = createColorMap(color);
 		createGradient(shadeIndex, height);
 	}
 
-	public void setColors(int[] colors, float[] shades) {
+	public void setColors(int[] colors) {
 		this.colors = colors;
-		this.shades = shades;
-		for(int i=0; i<shades.length; i++)
-			shadeColors[i] = createColorMap(colors[i], shades[i]);
+		for(int i=0; i<colors.length; i++)
+			shadeColors[i] = createColorMap(colors[i]);
 		createGradients(height);
 	}
 
@@ -72,7 +57,7 @@ public class GlassPaint {
 	}
 
 	private void createGradients(float h) {
-		for(int i=0; i<shades.length; i++)
+		for(int i=0; i<colors.length; i++)
 			createGradient(i, h);
 		glass = new LinearGradient(0, 0, 0, h/2, glassColors[0], glassColors[1], Shader.TileMode.CLAMP);
 		this.height = h;

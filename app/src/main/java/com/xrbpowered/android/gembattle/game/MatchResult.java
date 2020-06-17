@@ -5,6 +5,8 @@ import static com.xrbpowered.android.gembattle.game.Board.size;
 
 public class MatchResult {
 
+	private static final double baseChargeValue = 0.1f;
+
 	public final Board board;
 	public final boolean match[][] = new boolean[size][size];
 	public final int count[] = new int[Gem.values().length];
@@ -45,11 +47,11 @@ public class MatchResult {
 		applyCharges(board.player);
 	}
 
-	public int getValue(BattlePlayer player) {
-		int value = 0;
+	public double getValue(BattlePlayer player) {
+		double value = 0;
 		for(Gem gem : Gem.values()) {
 			int c = matchesToChareges(count[gem.ordinal()]);
-			value += c;
+			value += baseChargeValue * c;
 			Spell spell = player.spellForElement(gem);
 			if(spell!=null)
 				value += spell.valuePerCharge() * c;

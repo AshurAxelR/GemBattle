@@ -1,13 +1,19 @@
 package com.xrbpowered.android.gembattle.ui.utils;
 
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
+
+import com.xrbpowered.android.zoomui.UIElement;
 
 public class RenderUtils {
 
 	public static final BitmapFactory.Options noScale = new BitmapFactory.Options();
+	public static Resources resources;
+	public static Typeface fontBlack;
 
 	public static float lerp(float x0, float x1, float s) {
 		return x0 * (1-s) + x1 * s;
@@ -49,6 +55,10 @@ public class RenderUtils {
 		paint.setStyle(Paint.Style.FILL);
 		paint.setColor(fill);
 		canvas.drawText(message, x, y, paint);
+	}
+
+	public static void drawStrokeText(Canvas canvas, String message, float x, float y, Paint paint) {
+		drawStrokeText(canvas, message, x, y, paint, 0xffffffff, 0xff000000);
 	}
 
 	static {

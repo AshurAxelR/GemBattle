@@ -1,13 +1,11 @@
 package com.xrbpowered.android.gembattle.game;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.R;
 import com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo;
 import com.xrbpowered.android.gembattle.ui.BoardPane;
@@ -87,7 +85,7 @@ public enum Gem {
 	public static void loadBitmaps() {
 		for(Gem gem : values()) {
 			if(gem.bitmapId !=0) {
-				gem.bitmap = BitmapFactory.decodeResource(GemBattle.resources, gem.bitmapId, RenderUtils.noScale);
+				gem.bitmap = BitmapFactory.decodeResource(RenderUtils.resources, gem.bitmapId, RenderUtils.noScale);
 			}
 		}
 		loaded = true;

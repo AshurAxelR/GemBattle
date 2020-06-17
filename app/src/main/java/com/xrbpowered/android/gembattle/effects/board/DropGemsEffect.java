@@ -3,7 +3,6 @@ package com.xrbpowered.android.gembattle.effects.board;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.TimedEffect;
 import com.xrbpowered.android.gembattle.effects.WaitEffects;
@@ -11,6 +10,7 @@ import com.xrbpowered.android.gembattle.game.AILogic;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.DropColumn;
 import com.xrbpowered.android.gembattle.game.DropGem;
+import com.xrbpowered.android.gembattle.ui.GamePane;
 
 import static com.xrbpowered.android.gembattle.game.Board.size;
 
@@ -58,10 +58,10 @@ public class DropGemsEffect extends TimedEffect {
 		if(next==null) {
 			if (!AILogic.checkMoves(board)) {
 				board.clear();
-				GemBattle.popupMessageFloat.show("No available moves");
+				GamePane.instance.popupMessageFloat.show("No available moves");
 				return new DropGemsEffect(board, true);
 			} else {
-				return new WaitEffects(GemBattle.attackEffects) {
+				return new WaitEffects(GamePane.attackEffects) {
 					@Override
 					public Effect finish() {
 						return endTurn(board, false);
@@ -91,11 +91,11 @@ public class DropGemsEffect extends TimedEffect {
 		board.nextTurn();
 		if(board.player.human) {
 			board.targetMatches = AILogic.targetMatches(board, board.player);
-			GemBattle.popupMessageFloat.show("Your Turn");
+			GamePane.instance.popupMessageFloat.show("Your Turn");
 			return null;
 		}
 		else {
-			GemBattle.popupMessageFloat.show(timeOut ? "Time's up" : "Opponent's Turn");
+			GamePane.instance.popupMessageFloat.show(timeOut ? "Time's up" : "Opponent's Turn");
 			return new AIThinkEffect(board);
 		}
 	}

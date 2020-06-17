@@ -1,15 +1,11 @@
 package com.xrbpowered.android.gembattle.game;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.xrbpowered.android.gembattle.GemBattle;
-import com.xrbpowered.android.gembattle.R;
 import com.xrbpowered.android.gembattle.effects.attack.MissileEffect;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,8 +39,8 @@ public class Spell {
 		registerSpell(this);
 	}
 
-	public int valuePerCharge() {
-		return damage/maxCharges;
+	public double valuePerCharge() {
+		return damage/(double)maxCharges;
 	}
 
 	private static boolean loaded = false;
@@ -56,8 +52,8 @@ public class Spell {
 	public static void loadBitmaps() {
 		for(ArrayList<Spell> list : spells.values())
 			for(Spell spell : list) {
-				spell.bitmapEmpty = BitmapFactory.decodeResource(GemBattle.resources, spell.bitmapEmptyId, RenderUtils.noScale);
-				spell.bitmapFull = BitmapFactory.decodeResource(GemBattle.resources, spell.bitmapFullId, RenderUtils.noScale);
+				spell.bitmapEmpty = BitmapFactory.decodeResource(RenderUtils.resources, spell.bitmapEmptyId, RenderUtils.noScale);
+				spell.bitmapFull = BitmapFactory.decodeResource(RenderUtils.resources, spell.bitmapFullId, RenderUtils.noScale);
 			}
 		loaded = true;
 	}

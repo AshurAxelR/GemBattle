@@ -7,8 +7,9 @@ import static com.xrbpowered.android.gembattle.game.Board.size;
 public class AILogic {
 
 	private static final int aiMaxLimit = 10;
+	private static final double deepValueMultiplier = 0.5;
 
-	private static final AILogic ai = new AILogic(1);
+	private static final AILogic ai = new AILogic(2);
 
 	private final Board pad = new Board();
 	private final Board pad2 = new Board();
@@ -17,7 +18,7 @@ public class AILogic {
 	public final AILogic next;
 
 	public final SwitchGem switchGem = new SwitchGem();
-	public Integer maxValue;
+	public Double maxValue;
 
 	private BattlePlayer player;
 	private BattlePlayer opponent;
@@ -29,13 +30,13 @@ public class AILogic {
 		this.next = depth>1 ? new AILogic(depth-1) : null;
 	}
 
-	private Integer analyseSwitch() {
-		Integer value = null;
+	private Double analyseSwitch() {
+		Double value = null;
 		pad.copyTo(pad2);
 		int limit = aiMaxLimit;
 		while(match.find()) {
 			if(value==null)
-				value = 0;
+				value = 0.0;
 			if(limit<=0)
 				break;
 			match.updateCounts();
@@ -51,7 +52,7 @@ public class AILogic {
 		if(deep && next!=null) {
 			next.analyse(pad2, opponent, player, maxLimit, true, countMatches);
 			if(next.maxValue !=null)
-				value -= next.maxValue / 2;
+				value -= next.maxValue * deepValueMultiplier;
 		}
 
 		return value;
@@ -59,7 +60,7 @@ public class AILogic {
 
 	private void analyseSwitch(int x, int y, Dir d) {
 		pad.switchGem(x, y, x+d.dx, y+d.dy);
-		Integer value = analyseSwitch();
+		Double value = analyseSwitch();
 		if(value!=null && (maxValue ==null || value> maxValue)) {
 			maxValue = value;
 			switchGem.set(x, y, d);
@@ -111,7 +112,7 @@ public class AILogic {
 
 	public static int targetMatches(Board board, BattlePlayer player) {
 		ai.analyse(board, player, board.opponent(player), aiMaxLimit, false, true);
-		return ai.maxValue != null ? ai.maxValue : 0;
+		return ai.maxValue != null ? (int)Math.floor(ai.maxValue) : 0;
 	}
 
 	public static boolean checkMoves(Board board) {

@@ -1,15 +1,13 @@
 package com.xrbpowered.android.gembattle.effects.attack;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PointF;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.TimedEffect;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.game.MatchResult;
+import com.xrbpowered.android.gembattle.ui.GamePane;
 import com.xrbpowered.android.gembattle.ui.SpellChargeBubble;
 
 public class SpellChargeEffect extends TimedEffect {
@@ -28,7 +26,7 @@ public class SpellChargeEffect extends TimedEffect {
 		this.player = player;
 		this.target = target;
 		this.slot = slot;
-		this.ui = GemBattle.gamePane.getPlayerPane(player).spellPane.spells[slot];
+		this.ui = GamePane.instance.getPlayerPane(player).spellPane.spells[slot];
 		this.charges = charges;
 		this.attacks = (player.spellCharge[slot] + charges) / ui.spell.maxCharges;
 
@@ -45,7 +43,7 @@ public class SpellChargeEffect extends TimedEffect {
 		attacks--;
 		PointF sp = new PointF(ui.localToBaseX(ui.getWidth()/2), ui.localToBaseY(ui.getHeight()/2));
 		Effect missile = new MissileEffect(target, ui.spell, sp);
-		GemBattle.attackEffects.addEffect(missile);
+		GamePane.attackEffects.addEffect(missile);
 	}
 
 	@Override
@@ -78,7 +76,7 @@ public class SpellChargeEffect extends TimedEffect {
 		if(charges<1)
 			return;
 		Effect effect = new SpellChargeEffect(player, target, slot, charges);
-		GemBattle.attackEffects.addEffect(effect);
+		GamePane.attackEffects.addEffect(effect);
 	}
 
 	public static void applyCharges(MatchResult match) {

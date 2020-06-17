@@ -2,7 +2,6 @@ package com.xrbpowered.android.gembattle.ui;
 
 import android.graphics.Canvas;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.UIContainer;
@@ -45,8 +44,8 @@ public class BattlePlayerPane extends UIContainer {
 
 	@Override
 	protected void paintSelf(Canvas canvas) {
-		paint.setTypeface(GemBattle.boldFont);
+		paint.setTypeface(RenderUtils.fontBlack);
 		paint.setTextSize(40);
-		RenderUtils.drawStrokeText(canvas, player.human ? "Player" : "AI", getWidth()/2, 50, paint, 0xffffffff, 0xff000000);
+		RenderUtils.drawStrokeText(canvas, player.human ? "Player" : "AI", getWidth()/2, 50, paint);
 	}
 }

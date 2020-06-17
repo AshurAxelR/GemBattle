@@ -63,6 +63,11 @@ public class DropGemsEffect extends TimedEffect {
 			} else {
 				return new WaitEffects(GamePane.attackEffects) {
 					@Override
+					public boolean isFinished() {
+						return super.isFinished() && !GamePane.instance.spellsCharging();
+					}
+
+					@Override
 					public Effect finish() {
 						return endTurn(board, false);
 					}

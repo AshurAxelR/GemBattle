@@ -36,28 +36,27 @@ public class BattlePlayer {
 		}
 	}
 
+	public BattlePlayer opponent() {
+		return board.opponent(this);
+	}
+
+	public boolean addCharge(int slot) {
+		spellCharge[slot]++;
+		if(spellCharge[slot]==spells[slot].maxCharges) {
+			spellCharge[slot] = 0;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public void receiveDamage(int damage) {
 		health -= damage;
 		if(health<0)
 			health = 0;
 		if(health>maxHealth)
 			health = maxHealth;
-	}
-
-	public void applyCharges(Gem gem, int charges, BattlePlayer opponent) {
-		int slot = elementMap[gem.ordinal()];
-		if(slot<0)
-			return;
-		Spell spell = spells[slot];
-		if(spell==null)
-			return;
-
-		spellCharge[slot] += charges;
-
-		while(spellCharge[slot]>=spell.maxCharges) {
-			opponent.health += spell.damage;
-			spellCharge[slot] -= spell.maxCharges;
-		}
 	}
 
 	public int elementSlot(Gem element) {

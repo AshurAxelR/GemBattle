@@ -42,6 +42,13 @@ public class BattlePlayerPane extends UIContainer {
 		super.layout();
 	}
 
+	public void updateTime(float dt) {
+		damageText.updateTime(dt);
+		for(SpellChargeBubble spell : spellPane.spells) {
+			spell.chargeEffect.update(dt);
+		}
+	}
+
 	@Override
 	protected void paintSelf(Canvas canvas) {
 		paint.setTypeface(RenderUtils.fontBlack);

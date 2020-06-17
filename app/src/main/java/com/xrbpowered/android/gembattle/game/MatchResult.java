@@ -36,17 +36,6 @@ public class MatchResult {
 		return (c>=3) ? c*2 -3 : c;
 	}
 
-	public void applyCharges(BattlePlayer player) {
-		BattlePlayer opponent = board.opponent(player);
-		for(Gem gem : Gem.values()) {
-			player.applyCharges(gem, matchesToChareges(count[gem.ordinal()]), opponent);
-		}
-	}
-
-	public void applyCharges() {
-		applyCharges(board.player);
-	}
-
 	public double getValue(BattlePlayer player) {
 		double value = 0;
 		for(Gem gem : Gem.values()) {

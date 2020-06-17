@@ -33,6 +33,14 @@ public class SpellPane extends UIContainer {
 		}
 	}
 
+	public boolean isCharging() {
+		for(SpellChargeBubble spell : spells) {
+			if (spell.chargeEffect.isCharging())
+				return true;
+		}
+		return false;
+	}
+
 	@Override
 	protected void paintSelf(Canvas canvas) {
 		if(!Spell.isLoaded())

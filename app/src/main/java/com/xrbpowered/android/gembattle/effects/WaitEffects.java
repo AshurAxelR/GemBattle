@@ -11,9 +11,13 @@ public abstract class WaitEffects implements Effect {
 		this.effects = effects;
 	}
 
+	public boolean isFinished() {
+		return effects.isEmpty();
+	}
+
 	@Override
 	public Effect update(float dt) {
-		if(effects.isEmpty())
+		if(isFinished())
 			return finish();
 		else
 			return this;

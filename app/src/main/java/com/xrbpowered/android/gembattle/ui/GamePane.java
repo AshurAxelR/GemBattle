@@ -151,6 +151,10 @@ public class GamePane extends UIContainer {
 
 	private final static SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm");
 
+	public boolean spellsCharging() {
+		return humanPlayerPane.spellPane.isCharging() || aiPlayerPane.spellPane.isCharging();
+	}
+
 	public void updateTime() {
 		if(paused)
 			return;
@@ -163,8 +167,8 @@ public class GamePane extends UIContainer {
 
 		particles.update(dt);
 		attackEffects.update(dt);
-		humanPlayerPane.damageText.updateTime(dt);
-		aiPlayerPane.damageText.updateTime(dt);
+		humanPlayerPane.updateTime(dt);
+		aiPlayerPane.updateTime(dt);
 		boardPane.updateTime(dt);
 
 		prevt = t;

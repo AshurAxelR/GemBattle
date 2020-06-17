@@ -8,13 +8,14 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
+import com.xrbpowered.android.gembattle.effects.attack.SpellChargeEffect;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Spell;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
 
-public class SpellChargeBubble extends UIElement {
+public class SpellChargeBubble extends TapButton {
 
 	public static final int radius = 55;
 	public static final int distanceFromPivot = 125;
@@ -39,10 +40,12 @@ public class SpellChargeBubble extends UIElement {
 	public BattlePlayer player;
 	public Spell spell;
 
-	public float charges = 0f;
+	public final SpellChargeEffect chargeEffect;
 
 	public SpellChargeBubble(UIContainer parent, int spellSlot, BattlePlayer player) {
 		super(parent);
+		this.chargeEffect = new SpellChargeEffect(this);
+
 		this.player = player;
 		this.spellSlot = spellSlot;
 
@@ -52,11 +55,15 @@ public class SpellChargeBubble extends UIElement {
 	}
 
 	@Override
-	public boolean onTouchDown(float x, float y) {
+	public boolean isEnabled() {
+		return spell!=null;
+	}
+
+	@Override
+	public void onClick() {
 		new SpellInfoPane(GamePane.instance, spell,
-			(player.human ? 1 : -1)*SpellInfoPane.battleAnchorX,
+			(player.human ? 1 : -1) * SpellInfoPane.battleAnchorX,
 			GamePane.instance.baseToLocalY(localToBaseY(radius)));
-		return true;
 	}
 
 	@Override
@@ -67,7 +74,7 @@ public class SpellChargeBubble extends UIElement {
 
 			float px = parentToLocalX(SpellPane.pivotx);
 			float py = parentToLocalY(SpellPane.pivoty);
-			float s = charges / spell.maxCharges;
+			float s = chargeEffect.getLevel();
 
 			if(s>0) {
 				float r = distanceFromPivot - radius + s*radius*2;

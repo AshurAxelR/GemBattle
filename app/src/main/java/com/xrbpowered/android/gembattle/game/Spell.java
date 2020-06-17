@@ -81,7 +81,7 @@ public class Spell {
 		list.add(spell);
 	}
 
-	public static final Spell metalShard = new Spell(spell_metal_flash_empty, spell_metal_flash_full, "Metal Shard", Gem.metal, 1, 1) {
+	public static final Spell metalShard = new Spell(spell_metal_shard_empty, spell_metal_shard_full, "Metal Shard", Gem.metal, 1, 1) {
 		{
 			this.missileProps.particlesPerSecond = 100;
 			this.missileProps.scale = 0.5f;
@@ -95,7 +95,7 @@ public class Spell {
 	public static final Spell earthFlash = flash(spell_earth_flash_empty, spell_earth_flash_full, Gem.earth);
 	public static final Spell airFlash = flash(spell_air_flash_empty, spell_air_flash_full, Gem.air);
 
-	public static final Spell fireLance = lance(spell_fire_flash_empty, spell_fire_flash_full, Gem.fire);
-	public static final Spell airLance = lance(spell_air_flash_empty, spell_air_flash_full, Gem.air);
-	public static final Spell lightLance = lance(spell_light_flash_empty, spell_light_flash_full, Gem.light);
+	public static final Spell fireLance = lance(spell_fire_lance_empty, spell_fire_lance_full, Gem.fire);
+	public static final Spell airLance = lance(spell_air_lance_empty, spell_air_lance_full, Gem.air);
+	public static final Spell lightLance = lance(spell_light_lance_empty, spell_light_lance_full, Gem.light);
 }

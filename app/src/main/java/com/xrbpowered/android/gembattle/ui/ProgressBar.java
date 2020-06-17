@@ -10,15 +10,11 @@ public abstract class ProgressBar extends UIElement {
 
 	public static final int defaultHeight = 40;
 
-	private static final float[] shades = {1f, 0.25f};
-	private static final int light = 0;
-	private static final int dark = 1;
-
 	private final GlassPaint glass;
 
 	public ProgressBar(UIContainer parent, int color) {
 		super(parent);
-		glass = new GlassPaint(this, defaultHeight, color, shades);
+		glass = new GlassPaint(this, defaultHeight, color);
 		setSize(0, defaultHeight);
 	}
 
@@ -34,10 +30,11 @@ public abstract class ProgressBar extends UIElement {
 	@Override
 	public void paint(Canvas canvas) {
 		float w = getWidth()*getProgress();
-		if(w>0)
-			glass.paintGradient(canvas, 0, w, light);
-		if(w<getWidth())
-			glass.paintGradient(canvas, w, getWidth(), dark);
+		glass.paintGradient(canvas, 0, getWidth(), 0);
+		if(w<getWidth()) {
+			paint.setColor(0xcc000000);
+			canvas.drawRect(w, 0, getWidth(), getHeight(), paint);
+		}
 		glass.paintGlass(canvas);
 		glass.paintBorder(canvas, 0xffe4d9ad);
 		glass.paintText(canvas, getText(), 0xffffffff, 40);

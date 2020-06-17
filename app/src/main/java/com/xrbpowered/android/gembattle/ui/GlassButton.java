@@ -11,10 +11,8 @@ public class GlassButton extends TapButton {
 	public static final int defaultColor = 0xff55ddff;
 	public static final int disabledColor = 0xffdddddd;
 
-	private static final float[] shades = {1f, 0.8f, 1f};
 	private static final int normal = 0;
-	private static final int pressed = 1;
-	private static final int disabled = 2;
+	private static final int disabled = 1;
 
 	public String label;
 
@@ -22,7 +20,7 @@ public class GlassButton extends TapButton {
 
 	public GlassButton(UIContainer parent, String label, int color, int height) {
 		super(parent);
-		glass = new GlassPaint(this, height, new int[] {color, color, disabledColor}, shades);
+		glass = new GlassPaint(this, height, color, disabledColor);
 		setSize(0, height);
 		this.label = label;
 	}
@@ -47,7 +45,7 @@ public class GlassButton extends TapButton {
 
 	@Override
 	public void paint(Canvas canvas) {
-		glass.paintGradient(canvas, !isEnabled() ? disabled : down ? pressed : normal);
+		glass.paintGradient(canvas, !isEnabled() ? disabled : normal);
 		glass.paintGlass(canvas);
 		glass.paintBorder(canvas, 0xffe4d9ad);
 		glass.paintText(canvas, getLabel(), 0xffffffff, 40);

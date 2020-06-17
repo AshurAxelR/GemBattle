@@ -1,19 +1,15 @@
 package com.xrbpowered.android.gembattle.ui;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 
-import com.xrbpowered.android.gembattle.GemBattle;
-import com.xrbpowered.android.gembattle.R;
 import com.xrbpowered.android.gembattle.effects.EffectSet;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.game.Board;
+import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
 
@@ -25,6 +21,12 @@ public class GamePane extends UIContainer {
 	public static final int targetWidth = 1680;
 	public static final int targetHeight = 1080;
 
+	public static GamePane instance;
+	public static float time = 0f;
+
+	public static EffectSet particles;
+	public static EffectSet attackEffects;
+
 	public final BoardPane boardPane;
 	public final ProgressBar turnTimerProgress;
 	public final BattlePlayerPane humanPlayerPane;
@@ -32,8 +34,9 @@ public class GamePane extends UIContainer {
 	public final GlassButton pauseButton;
 	public final GlassButton skipButton;
 	public final UIElement attackEffectPane;
+	public final PopupMessageFloat popupMessageFloat;
 
-	public boolean paused = false;
+	private boolean paused = false;
 
 	private final LinearGradient bgFill = new LinearGradient(0, 0, targetWidth, 0,
 			new int[] {0xff373833, 0xff000000, 0xff373833},
@@ -44,8 +47,9 @@ public class GamePane extends UIContainer {
 
 	public GamePane(UIContainer parent) {
 		super(parent);
-		GemBattle.particles = new EffectSet();
-		GemBattle.attackEffects = new EffectSet();
+		instance = this;
+		particles = new EffectSet();
+		attackEffects = new EffectSet();
 
 		boardPane = new BoardPane(this, new Board());
 
@@ -55,15 +59,14 @@ public class GamePane extends UIContainer {
 		pauseButton = new GlassButton(this, "Pause") {
 			@Override
 			public void onClick() {
-				paused = !paused;
-				prevt = System.currentTimeMillis();
+				setPaused(!paused);
 			}
 		};
 		pauseButton.setSize(350, pauseButton.getHeight());
 		skipButton = new GlassButton(this, "Skip") {
 			@Override
 			public boolean isEnabled() {
-				return boardPane.isActive(); // && !paused;
+				return boardPane.isActive() && !paused;
 			}
 			@Override
 			public void onClick() {
@@ -91,15 +94,15 @@ public class GamePane extends UIContainer {
 		attackEffectPane = new UIElement(this) {
 			@Override
 			public void paint(Canvas canvas) {
-				GemBattle.particles.draw(canvas, paint);
-				GemBattle.attackEffects.draw(canvas, paint);
+				particles.draw(canvas, paint);
+				attackEffects.draw(canvas, paint);
 			}
 		};
 
 		humanPlayerPane.damageText = new DamageTextFloat(this);
 		aiPlayerPane.damageText = new DamageTextFloat(this);
 
-		GemBattle.popupMessageFloat = new PopupMessageFloat(this);
+		popupMessageFloat = new PopupMessageFloat(this);
 	}
 
 	public BattlePlayerPane getPlayerPane(BattlePlayer player) {
@@ -126,14 +129,24 @@ public class GamePane extends UIContainer {
 		turnTimerProgress.setSize(boardPane.getWidth()+12, turnTimerProgress.getHeight());
 		turnTimerProgress.setLocation(boardPane.getX()-6, boardPane.getY()/2 - turnTimerProgress.getHeight()/2);
 
-		GemBattle.popupMessageFloat.setLocation(
-			(getWidth()-GemBattle.popupMessageFloat.getWidth())/2,
-			(getHeight()-GemBattle.popupMessageFloat.getHeight())/2);
+		popupMessageFloat.setLocation(
+			(getWidth()-popupMessageFloat.getWidth())/2,
+			(getHeight()-popupMessageFloat.getHeight())/2);
 
 		attackEffectPane.setSize(getWidth(), getHeight());
 		attackEffectPane.setLocation(0, 0);
 
 		super.layout();
+	}
+
+	public boolean isPaused() {
+		return paused;
+	}
+
+	public void setPaused(boolean paused) {
+		if(this.paused && !paused)
+			prevt = System.currentTimeMillis();
+		this.paused = paused;
 	}
 
 	private final static SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm");
@@ -146,10 +159,10 @@ public class GamePane extends UIContainer {
 		if(prevt==0L)
 			prevt = t;
 		float dt = (t-prevt)/1000f;
-		GemBattle.time += dt;
+		time += dt;
 
-		GemBattle.particles.update(dt);
-		GemBattle.attackEffects.update(dt);
+		particles.update(dt);
+		attackEffects.update(dt);
 		humanPlayerPane.damageText.updateTime(dt);
 		aiPlayerPane.damageText.updateTime(dt);
 		boardPane.updateTime(dt);
@@ -172,7 +185,7 @@ public class GamePane extends UIContainer {
 
 		paint.setStyle(Paint.Style.FILL);
 		paint.setColor(0xffffffff);
-		paint.setTypeface(GemBattle.boldFont);
+		paint.setTypeface(RenderUtils.fontBlack);
 
 		paint.setTextSize(25);
 		paint.setTextAlign(Paint.Align.RIGHT);

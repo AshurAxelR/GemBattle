@@ -4,9 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.TimedEffect;
+import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
 
@@ -72,7 +72,7 @@ public class DamageTextFloat extends UIElement {
 
 	@Override
 	public void paint(Canvas canvas) {
-		paint.setTypeface(GemBattle.boldFont);
+		paint.setTypeface(RenderUtils.fontBlack);
 		paint.setStyle(Paint.Style.FILL);
 		paint.setTextSize(textSize);
 		paint.setTextAlign(Paint.Align.CENTER);

@@ -5,7 +5,6 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.zoomui.UIElement;
 
 import static com.xrbpowered.android.gembattle.ui.utils.RenderUtils.changeBrightness;
@@ -115,7 +114,7 @@ public class GlassPaint {
 	public void paintText(Canvas canvas, String text, int color, int size) {
 		if(text!=null) {
 			Paint paint = UIElement.paint;
-			paint.setTypeface(GemBattle.boldFont);
+			paint.setTypeface(RenderUtils.fontBlack);
 			paint.setTextSize(size);
 			RenderUtils.drawStrokeText(canvas, text, ui.getWidth()/2, ui.getHeight()/2, paint, color, 0xff000000);
 		}

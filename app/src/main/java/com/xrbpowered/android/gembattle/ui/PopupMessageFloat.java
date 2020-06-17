@@ -3,7 +3,6 @@ package com.xrbpowered.android.gembattle.ui;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
@@ -45,7 +44,7 @@ public class PopupMessageFloat extends UIElement {
 			s = 1f - (float)(time-startDuration)/fadeDuration;
 
 
-		paint.setTypeface(GemBattle.boldFont);
+		paint.setTypeface(RenderUtils.fontBlack);
 		paint.setTextSize(60);
 		RenderUtils.drawStrokeText(canvas, message, getWidth()/2, getHeight()/2, paint, Color.argb(s, 1, 1, 1), Color.argb(s, 0, 0, 0));
 	}

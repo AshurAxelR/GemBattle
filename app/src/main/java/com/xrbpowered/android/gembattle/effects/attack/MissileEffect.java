@@ -4,13 +4,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.effects.particles.DotParticle;
 import com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo;
 import com.xrbpowered.android.gembattle.effects.particles.Particle;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Spell;
+import com.xrbpowered.android.gembattle.ui.GamePane;
 import com.xrbpowered.android.zoomui.UIElement;
 
 import java.util.Random;
@@ -50,10 +50,10 @@ public class MissileEffect extends Particle {
 		this.target = target;
 		this.spell = spell;
 
-		UIElement targetPane = GemBattle.gamePane.getPlayerPane(target);
+		UIElement targetPane = GamePane.instance.getPlayerPane(target);
 		this.targetPointBase = new PointF(targetPane.localToBaseX(targetPane.getWidth()/2), 300);
 
-		UIElement ui = GemBattle.gamePane.attackEffectPane;
+		UIElement ui = GamePane.instance.attackEffectPane;
 		this.sourcePoint = new PointF(ui.baseToLocalX(sourcePointBase.x), ui.baseToLocalY(sourcePointBase.y));
 		this.targetPoint = new PointF(ui.baseToLocalX(targetPointBase.x), ui.baseToLocalY(targetPointBase.y));
 		prevx = this.sourcePoint.x;
@@ -90,7 +90,7 @@ public class MissileEffect extends Particle {
 				x0 += 0.1f * d * dx;
 				y0 += 0.1f * d * dy;
 				Particle p = new DotParticle(x0, y0, x1, y1, 3f, 1f, 2.5f, props.particleInfo.color);
-				GemBattle.particles.addEffect(p);
+				GamePane.particles.addEffect(p);
 			}
 		}
 
@@ -103,7 +103,7 @@ public class MissileEffect extends Particle {
 	@Override
 	public Effect finish() {
 		target.receiveDamage(spell.damage);
-		GemBattle.gamePane.getPlayerPane(target).damageText.addDamageText(spell.damage);
+		GamePane.instance.getPlayerPane(target).damageText.addDamageText(spell.damage);
 		return null;
 	}
 

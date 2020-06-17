@@ -8,7 +8,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
-import com.xrbpowered.android.gembattle.GemBattle;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Spell;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
@@ -53,6 +52,14 @@ public class SpellChargeBubble extends UIElement {
 	}
 
 	@Override
+	public boolean onTouchDown(float x, float y) {
+		new SpellInfoPane(GamePane.instance, spell,
+			(player.human ? 1 : -1)*SpellInfoPane.battleAnchorX,
+			GamePane.instance.baseToLocalY(localToBaseY(radius)));
+		return true;
+	}
+
+	@Override
 	public void paint(Canvas canvas) {
 		if(spell!=null) {
 			float bpos = radius-bitmapSize/2;
@@ -77,7 +84,7 @@ public class SpellChargeBubble extends UIElement {
 				canvas.clipPath(clipLevel);
 				canvas.drawBitmap(spell.bitmapFull, bpos, bpos, paint);
 
-				float a = RenderUtils.wave(GemBattle.time/2f + spellSlot/6f);
+				float a = RenderUtils.wave(GamePane.time/2f + spellSlot/6f);
 				gradPaint.setAlpha((int)(255*a));
 				gradPaint.setShader(grad);
 				canvas.clipPath(clipSpell);

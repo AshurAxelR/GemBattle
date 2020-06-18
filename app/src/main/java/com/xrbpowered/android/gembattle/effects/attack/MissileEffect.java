@@ -1,5 +1,6 @@
 package com.xrbpowered.android.gembattle.effects.attack;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -24,6 +25,8 @@ public class MissileEffect extends Particle {
 	private static final float minAmp = 100f;
 	private static final float maxAmp = 300f;
 	private static final float missileRadius = 25f;
+
+	private static final float debugDurationScale = 1f;
 
 	public static class Properties {
 		public int color;
@@ -60,7 +63,7 @@ public class MissileEffect extends Particle {
 		prevy = this.sourcePoint.y;
 
 		this.props = spell.missileProps;
-		this.duration = (random.nextFloat()*0.1f+1f)*props.duration;
+		this.duration = (random.nextFloat()*0.1f+1f)*props.duration * debugDurationScale;
 		phi = random.nextFloat();
 		f = random.nextFloat()*(maxF-minF) + minF;
 		amp = random.nextFloat()*(maxAmp-minAmp) + minAmp;
@@ -73,7 +76,7 @@ public class MissileEffect extends Particle {
 		float newy = calcY(ts);
 
 		if(props.particleInfo!=null) {
-			float countf = props.particlesPerSecond * dt + remParticle;
+			float countf = props.particlesPerSecond * dt / debugDurationScale + remParticle;
 			int count = (int) countf;
 			remParticle = countf - count;
 
@@ -119,8 +122,26 @@ public class MissileEffect extends Particle {
 
 	@Override
 	public void draw(Canvas canvas, float x, float y, float ts, Paint paint) {
-		paint.setStyle(Paint.Style.FILL);
 		paint.setColor(props.color);
-		canvas.drawCircle(x, y, missileRadius*props.scale, paint);
+		//canvas.drawCircle(x, y, 10, paint);
+
+		canvas.save();
+		canvas.translate(x, y);
+		canvas.scale(props.scale, props.scale);
+		float a;
+		if(props.particleInfo.aligned) {
+			float dx = calcX(ts+0.01f)-x;
+			float dy = calcY(ts+0.01f)-y;
+			a = (float)Math.toDegrees(Math.atan2(dy, dx));
+		}
+		else {
+			a = time * props.particleInfo.rotationSpeed * 180f;
+		}
+		canvas.rotate(a);
+
+		Bitmap bmp = props.particleInfo.bitmap();
+		canvas.drawBitmap(bmp, -bmp.getWidth()/2, -bmp.getHeight()/2, paint);
+
+		canvas.restore();
 	}
 }

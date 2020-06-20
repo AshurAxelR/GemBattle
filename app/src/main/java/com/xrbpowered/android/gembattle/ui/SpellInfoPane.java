@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 
 import com.xrbpowered.android.gembattle.game.Spell;
+import com.xrbpowered.android.gembattle.ui.common.OverlayPane;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.gembattle.ui.utils.Strings;
 import com.xrbpowered.android.zoomui.UIContainer;

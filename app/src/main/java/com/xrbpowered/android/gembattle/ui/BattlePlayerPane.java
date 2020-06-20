@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
+import com.xrbpowered.android.gembattle.ui.common.ProgressBar;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.UIContainer;
 

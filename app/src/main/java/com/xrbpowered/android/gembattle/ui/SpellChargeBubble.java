@@ -11,6 +11,7 @@ import android.graphics.Shader;
 import com.xrbpowered.android.gembattle.effects.attack.SpellChargeEffect;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Spell;
+import com.xrbpowered.android.gembattle.ui.common.TapButton;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.UIContainer;
 

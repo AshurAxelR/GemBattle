@@ -10,6 +10,7 @@ import com.xrbpowered.android.gembattle.game.AILogic;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.DropColumn;
 import com.xrbpowered.android.gembattle.game.DropGem;
+import com.xrbpowered.android.gembattle.ui.GameOverPane;
 import com.xrbpowered.android.gembattle.ui.GamePane;
 
 import static com.xrbpowered.android.gembattle.game.Board.size;
@@ -94,7 +95,11 @@ public class DropGemsEffect extends TimedEffect {
 
 	public static Effect endTurn(Board board, boolean timeOut) {
 		board.nextTurn();
-		if(board.player.human) {
+		if(board.isFinished()) {
+			new GameOverPane(GamePane.instance, board.humanPlayer.health>0);
+			return null;
+		}
+		else if(board.player.human) {
 			board.targetMatches = AILogic.targetMatches(board, board.player);
 			GamePane.instance.popupMessageFloat.show("Your Turn");
 			return null;

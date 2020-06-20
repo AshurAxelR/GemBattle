@@ -10,6 +10,8 @@ import com.xrbpowered.android.gembattle.effects.EffectSet;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.Gem;
+import com.xrbpowered.android.gembattle.ui.common.GlassButton;
+import com.xrbpowered.android.gembattle.ui.common.ProgressBar;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.gembattle.ui.utils.Strings;
 import com.xrbpowered.android.zoomui.UIContainer;
@@ -57,12 +59,20 @@ public class GamePane extends UIContainer {
 
 		pauseButton = new GlassButton(this, "Pause") {
 			@Override
+			public boolean isVisible() {
+				return super.isVisible() && !boardPane.board.isFinished();
+			}
+			@Override
 			public void onClick() {
 				setPaused(!paused);
 			}
 		};
 		pauseButton.setSize(350, pauseButton.getHeight());
 		skipButton = new GlassButton(this, "Skip") {
+			@Override
+			public boolean isVisible() {
+				return super.isVisible() && !boardPane.board.isFinished();
+			}
 			@Override
 			public boolean isEnabled() {
 				return boardPane.isActive() && !paused;

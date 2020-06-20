@@ -46,7 +46,7 @@ public class BoardPane extends UIElement {
 	}
 
 	public boolean isActive() {
-		return effect==null && board.player.human;
+		return effect==null && board.player.human && !board.isFinished();
 	}
 
 	public void skip() {
@@ -110,29 +110,31 @@ public class BoardPane extends UIElement {
 		paint.setStrokeWidth(4f);
 		canvas.drawRect(-4, -4, screenSize+4, screenSize+4, paint);
 
-		if(GamePane.instance.isPaused() && hideOnPause) {
-			paint.setTypeface(RenderUtils.fontBlack);
-			paint.setTextSize(60);
-			RenderUtils.drawStrokeText(canvas, "Paused", screenSize/2, screenSize/2, paint);
-		}
-		else {
-			canvas.save();
-			canvas.clipRect(0, 0, screenSize, screenSize);
-			for (int x = 0; x < size; x++)
-				for (int y = 0; y < size; y++) {
-					board.gems[x][y].draw(canvas, x * gemSize, y * gemSize, paint);
+		if(!board.isFinished()) {
+			if(GamePane.instance.isPaused() && hideOnPause) {
+				paint.setTypeface(RenderUtils.fontBlack);
+				paint.setTextSize(60);
+				RenderUtils.drawStrokeText(canvas, "Paused", screenSize/2, screenSize/2, paint);
+			}
+			else {
+				canvas.save();
+				canvas.clipRect(0, 0, screenSize, screenSize);
+				for (int x = 0; x < size; x++)
+					for (int y = 0; y < size; y++) {
+						board.gems[x][y].draw(canvas, x * gemSize, y * gemSize, paint);
+					}
+
+				if (effect != null)
+					effect.draw(canvas, paint);
+				canvas.restore();
+
+				if (effect == null && switchGem.hasStart) {
+					paint.setStyle(Paint.Style.STROKE);
+					paint.setStrokeWidth(4);
+					paint.setColor(0xffffffff);
+					canvas.drawRect(switchGem.sx * gemSize - 3, switchGem.sy * gemSize - 3,
+							(switchGem.sx + 1) * gemSize + 3, (switchGem.sy + 1) * gemSize + 3, paint);
 				}
-
-			if (effect != null)
-				effect.draw(canvas, paint);
-			canvas.restore();
-
-			if (effect == null && switchGem.hasStart) {
-				paint.setStyle(Paint.Style.STROKE);
-				paint.setStrokeWidth(4);
-				paint.setColor(0xffffffff);
-				canvas.drawRect(switchGem.sx * gemSize - 3, switchGem.sy * gemSize - 3,
-						(switchGem.sx + 1) * gemSize + 3, (switchGem.sy + 1) * gemSize + 3, paint);
 			}
 		}
 	}

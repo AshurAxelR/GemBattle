@@ -19,11 +19,22 @@ public class Board {
 
 	private float turnTimer = 0;
 	private boolean timerStopped = true;
+	private boolean finished = false;
 
 	public void nextTurn() {
-		player = opponent(player);
 		turnTimer = turnTime;
-		timerStopped = !player.human;
+		if(humanPlayer.health<=0 || aiPlayer.health<=0) {
+			player = aiPlayer;
+			finished = true;
+		}
+		else {
+			player = opponent(player);
+			timerStopped = !player.human;
+		}
+	}
+
+	public boolean isFinished() {
+		return finished;
 	}
 
 	public BattlePlayer opponent(BattlePlayer player) {
@@ -39,7 +50,7 @@ public class Board {
 	}
 
 	public boolean updateTurnTime(float dt) {
-		if(timerStopped)
+		if(timerStopped || finished)
 			return true;
 		turnTimer -= dt;
 		if(turnTimer<=0) {

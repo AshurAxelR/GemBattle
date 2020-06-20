@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 
 import com.xrbpowered.android.gembattle.game.Spell;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
+import com.xrbpowered.android.gembattle.ui.utils.Strings;
 import com.xrbpowered.android.zoomui.UIContainer;
 
 public class SpellInfoPane extends UIContainer {
@@ -19,7 +20,7 @@ public class SpellInfoPane extends UIContainer {
 	private final float anchorX, anchorY;
 
 	public SpellInfoPane(UIContainer parent, Spell spell, float anchorX, float anchorY) {
-		super(new OverlayPane(parent));
+		super(new OverlayPane(parent, true));
 		this.spell = spell;
 		this.anchorX = anchorX;
 		this.anchorY = anchorY;
@@ -57,10 +58,10 @@ public class SpellInfoPane extends UIContainer {
 		canvas.drawText(spell.name, x, y, paint);
 		y += 50;
 		paint.setColor(0xff555555);
-		paint.setTextSize(35);
+		paint.setTextSize(30);
 		paint.setTypeface(Typeface.SANS_SERIF);
-		canvas.drawText(String.format("%d damage", spell.damage), x, y, paint);
+		canvas.drawText(Strings.format("%d damage", spell.damage), x, y, paint);
 		y += 35;
-		canvas.drawText(String.format("Requires %d charge%s", spell.maxCharges, spell.maxCharges==1 ? "" : "s"), x, y, paint);
+		canvas.drawText(Strings.format("Requires %d charge%s", spell.maxCharges, spell.maxCharges==1 ? "" : "s"), x, y, paint);
 	}
 }

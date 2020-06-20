@@ -20,6 +20,12 @@ public class SpellChargeBubble extends TapButton {
 	public static final int distanceFromPivot = 125;
 	public static final int bitmapSize = 120;
 
+	public final int spellSlot;
+	public final BattlePlayerPane playerPane;
+	public final SpellChargeEffect chargeEffect;
+
+	public Spell spell = null;
+
 	private static final Paint gradPaint = new Paint();
 	private static final int[] gradColors = {0x00ffffff, 0x00ffffff, 0x44ffffff};
 	private static final Path clipSpell = new Path();
@@ -34,23 +40,17 @@ public class SpellChargeBubble extends TapButton {
 	private Shader grad = null;
 	private float grads = 0;
 
-	public final int spellSlot;
-
-	public BattlePlayer player;
-	public Spell spell;
-
-	public final SpellChargeEffect chargeEffect;
-
-	public SpellChargeBubble(UIContainer parent, int spellSlot, BattlePlayer player) {
+	public SpellChargeBubble(UIContainer parent, int spellSlot, BattlePlayerPane playerPane) {
 		super(parent);
+		this.spellSlot = spellSlot;
+		this.playerPane = playerPane;
 		this.chargeEffect = new SpellChargeEffect(this);
 
-		this.player = player;
-		this.spellSlot = spellSlot;
-
-		spell = player.spells[spellSlot];
-
 		setSize(radius*2, radius*2);
+	}
+
+	public void setPlayer(BattlePlayer player) {
+		spell = player.spells[spellSlot];
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class SpellChargeBubble extends TapButton {
 	@Override
 	public void onClick() {
 		new SpellInfoPane(GamePane.instance, spell,
-			(player.human ? 1 : -1) * SpellInfoPane.battleAnchorX,
+			(playerPane.align==Paint.Align.LEFT ? 1 : -1) * SpellInfoPane.battleAnchorX,
 			GamePane.instance.baseToLocalY(localToBaseY(radius)));
 	}
 

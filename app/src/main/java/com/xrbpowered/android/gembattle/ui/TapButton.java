@@ -1,7 +1,5 @@
 package com.xrbpowered.android.gembattle.ui;
 
-import android.graphics.PointF;
-
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
 

@@ -24,8 +24,6 @@ public class GlassPaint {
 
 	public GlassPaint(UIElement ui, int defaultHeight, int... colors) {
 		this.ui = ui;
-		shaders = new LinearGradient[colors.length];
-		shadeColors = new int[colors.length][];
 		this.height = defaultHeight;
 		setColors(colors);
 	}
@@ -47,6 +45,8 @@ public class GlassPaint {
 
 	public void setColors(int[] colors) {
 		this.colors = colors;
+		shaders = new LinearGradient[colors.length];
+		shadeColors = new int[colors.length][];
 		for(int i=0; i<colors.length; i++)
 			shadeColors[i] = createColorMap(colors[i]);
 		createGradients(height);

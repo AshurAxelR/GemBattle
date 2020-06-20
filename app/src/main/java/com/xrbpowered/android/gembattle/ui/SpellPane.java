@@ -19,13 +19,13 @@ public class SpellPane extends UIContainer {
 
 	public final SpellChargeBubble[] spells = new SpellChargeBubble[BattlePlayer.spellSlotCount];
 
-	public SpellPane(UIContainer parent, BattlePlayer player) {
+	public SpellPane(BattlePlayerPane parent) {
 		super(parent);
 
 		setSize(width, height);
 
 		for(int i=0; i<spells.length; i++) {
-			spells[i] = new SpellChargeBubble(this, i, player);
+			spells[i] = new SpellChargeBubble(this, i, parent);
 			spells[i].setLocation(
 				pivotx + distanceFromPivot*(float)Math.sin(i*Math.PI/3) - radius,
 				pivoty - distanceFromPivot*(float)Math.cos(i*Math.PI/3) - radius

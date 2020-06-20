@@ -4,17 +4,16 @@ import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
+import android.graphics.Typeface;
 
 import com.xrbpowered.android.gembattle.effects.EffectSet;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
-import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.game.Board;
+import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
+import com.xrbpowered.android.gembattle.ui.utils.Strings;
 import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class GamePane extends UIContainer {
 
@@ -51,10 +50,10 @@ public class GamePane extends UIContainer {
 		particles = new EffectSet();
 		attackEffects = new EffectSet();
 
-		boardPane = new BoardPane(this, new Board());
+		boardPane = new BoardPane(this);
 
-		humanPlayerPane = new BattlePlayerPane(this, boardPane.board.humanPlayer);
-		aiPlayerPane = new BattlePlayerPane(this, boardPane.board.aiPlayer);
+		humanPlayerPane = new BattlePlayerPane(this, Paint.Align.LEFT);
+		aiPlayerPane = new BattlePlayerPane(this, Paint.Align.RIGHT);
 
 		pauseButton = new GlassButton(this, "Pause") {
 			@Override
@@ -103,12 +102,20 @@ public class GamePane extends UIContainer {
 		aiPlayerPane.damageText = new DamageTextFloat(this);
 
 		popupMessageFloat = new PopupMessageFloat(this);
+
+		startBoard(new Board());
+	}
+
+	public void startBoard(Board board) {
+		humanPlayerPane.setPlayer(board.humanPlayer);
+		aiPlayerPane.setPlayer(board.aiPlayer);
+		boardPane.startBoard(board);
 	}
 
 	public BattlePlayerPane getPlayerPane(BattlePlayer player) {
-		if(humanPlayerPane.player==player)
+		if(humanPlayerPane.getPlayer()==player)
 			return humanPlayerPane;
-		else if(aiPlayerPane.player==player)
+		else if(aiPlayerPane.getPlayer()==player)
 			return aiPlayerPane;
 		else
 			return null;
@@ -148,8 +155,6 @@ public class GamePane extends UIContainer {
 			prevt = System.currentTimeMillis();
 		this.paused = paused;
 	}
-
-	private final static SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm");
 
 	public boolean spellsCharging() {
 		return humanPlayerPane.spellPane.isCharging() || aiPlayerPane.spellPane.isCharging();
@@ -193,13 +198,14 @@ public class GamePane extends UIContainer {
 
 		paint.setTextSize(25);
 		paint.setTextAlign(Paint.Align.RIGHT);
-		canvas.drawText(clockFormat.format(Calendar.getInstance().getTime()), getWidth()-10, 25, paint);
+		canvas.drawText(Strings.clock(), getWidth()-10, 25, paint);
 
 		if(boardPane.board.player.human) {
+			paint.setTypeface(Typeface.SANS_SERIF);
 			paint.setColor(0xff999999);
-			paint.setTextSize(25);
+			paint.setTextSize(30);
 			paint.setTextAlign(Paint.Align.CENTER);
-			canvas.drawText(String.format("You can match %d", boardPane.board.targetMatches), getWidth()/2, getHeight()-50, paint);
+			canvas.drawText(Strings.format("You can match %d", boardPane.board.targetMatches), getWidth()/2, getHeight()-50, paint);
 		}
 	}
 }

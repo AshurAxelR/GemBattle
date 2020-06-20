@@ -22,13 +22,12 @@ public enum Gem {
 	water("Water", 0xff006ed5, R.drawable.gem_water, waterParticle),
 	earth("Earth", 0xff69b20a, R.drawable.gem_earth, earthParticle),
 	air("Air", 0xff96e8ff, R.drawable.gem_air, airParticle),
-	light("Light", 0xfffff7cc, R.drawable.gem_light, lightParticle),
-	dark("Dark", 0xff391859, 0, null);
+	light("Light", 0xfffff7cc, R.drawable.gem_light, lightParticle);
+	//dark("Dark", 0xff391859, 0, null);
 
 	public static final int bitmapMargin = 10;
 
 	public final String name;
-	public final int color;
 	public final int bitmapId;
 	public final GemParticleInfo particleInfo;
 
@@ -36,7 +35,7 @@ public enum Gem {
 
 	Gem(String name, int color, int bitmapId, GemParticleInfo particleInfo) {
 		this.name = name;
-		this.color = color;
+		//this.color = color;
 		this.bitmapId = bitmapId;
 		this.particleInfo = particleInfo;
 	}
@@ -44,11 +43,6 @@ public enum Gem {
 	public void draw(Canvas canvas, float x, float y, Paint paint) {
 		if(bitmap !=null)
 			canvas.drawBitmap(bitmap, x-bitmapMargin, y-bitmapMargin, paint);
-		else if(color!=0) {
-			paint.setStyle(Paint.Style.FILL);
-			paint.setColor(color);
-			canvas.drawCircle(x + BoardPane.gemSize/2, y + BoardPane.gemSize/2, BoardPane.gemSize/2, paint);
-		}
 	}
 
 	public void drawBoard(Canvas canvas, float x, float y, Paint paint) {
@@ -64,11 +58,6 @@ public enum Gem {
 			float size = s * (BoardPane.gemSize + 2*bitmapMargin);
 			r.set(cx - size/2, cy - size/2, cx + size/2, cy + size/2);
 			canvas.drawBitmap(bitmap, null, r, paint);
-		}
-		else if(color!=0) {
-			paint.setStyle(Paint.Style.FILL);
-			paint.setColor(color);
-			canvas.drawCircle(x + BoardPane.gemSize/2, y + BoardPane.gemSize/2, BoardPane.gemSize*s/2, paint);
 		}
 	}
 

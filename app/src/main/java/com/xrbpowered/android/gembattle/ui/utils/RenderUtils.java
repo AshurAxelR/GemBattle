@@ -7,8 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
-import com.xrbpowered.android.zoomui.UIElement;
-
 public class RenderUtils {
 
 	public static final BitmapFactory.Options noScale = new BitmapFactory.Options();

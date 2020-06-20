@@ -33,11 +33,13 @@ public class BoardPane extends UIElement {
 	private final SwitchGem switchGem = new SwitchGem();
 	private Effect effect;
 
-	public BoardPane(UIContainer parent, Board board) {
+	public BoardPane(UIContainer parent) {
 		super(parent);
-		this.board = board;
 		setSize(screenSize, screenSize);
+	}
 
+	public void startBoard(Board board) {
+		this.board = board;
 		board.clear();
 		board.player = board.aiPlayer;
 		effect = new DropGemsEffect(board, true);

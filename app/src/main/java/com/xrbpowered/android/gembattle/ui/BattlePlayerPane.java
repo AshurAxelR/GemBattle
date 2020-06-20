@@ -1,6 +1,7 @@
 package com.xrbpowered.android.gembattle.ui;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
@@ -8,16 +9,17 @@ import com.xrbpowered.android.zoomui.UIContainer;
 
 public class BattlePlayerPane extends UIContainer {
 
-	public BattlePlayer player;
-
 	public final ProgressBar healthBar;
 	public final SpellPane spellPane;
 	public DamageTextFloat damageText;
 
-	public BattlePlayerPane(UIContainer parent, BattlePlayer player) {
-		super(parent);
-		this.player = player;
+	public final Paint.Align align;
 
+	private BattlePlayer player;
+
+	public BattlePlayerPane(UIContainer parent, Paint.Align align) {
+		super(parent);
+		this.align = align;
 		setSize(SpellPane.width, 1000);
 
 		healthBar = new ProgressBar(this, 0xffee0000) {
@@ -31,7 +33,18 @@ public class BattlePlayerPane extends UIContainer {
 			}
 		};
 
-		spellPane = new SpellPane(this, player);
+		spellPane = new SpellPane(this);
+	}
+
+	public BattlePlayer getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(BattlePlayer player) {
+		this.player = player;
+		for(SpellChargeBubble spell : spellPane.spells) {
+			spell.setPlayer(player);
+		}
 	}
 
 	@Override

@@ -32,7 +32,6 @@ public class Spell {
 		this.maxCharges = maxCharges;
 		this.damage = damage;
 
-		this.missileProps.color = element.color;
 		this.missileProps.particleInfo = element.particleInfo;
 		this.missileProps.duration = 0.75f;
 
@@ -65,6 +64,7 @@ public class Spell {
 
 	private static Spell lance(int bitmapEmptyId, int bitmapFullId, Gem element) {
 		Spell spell = new Spell(bitmapEmptyId, bitmapFullId, element.name + " Lance", element, 12, 36);
+		spell.missileProps.particlesPerSecond = 250;
 		spell.missileProps.scale = 1.5f;
 		spell.missileProps.duration = 1.2f;
 		return spell;
@@ -83,9 +83,8 @@ public class Spell {
 
 	public static final Spell metalShard = new Spell(spell_metal_shard_empty, spell_metal_shard_full, "Metal Shard", Gem.metal, 1, 1) {
 		{
-			this.missileProps.particlesPerSecond = 100;
+			this.missileProps.particlesPerSecond = 90;
 			this.missileProps.scale = 0.5f;
-			this.missileProps.color = 0xffffffff;
 			this.missileProps.duration = 0.5f;
 		}
 	};

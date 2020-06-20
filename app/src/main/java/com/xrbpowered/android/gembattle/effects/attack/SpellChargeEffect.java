@@ -24,6 +24,10 @@ public class SpellChargeEffect implements Effect {
 		this.ui = ui;
 	}
 
+	public BattlePlayer getPlayer() {
+		return ui.playerPane.getPlayer();
+	}
+
 	public void addCharges(int charges) {
 		this.pendingCharges += charges;
 	}
@@ -33,12 +37,12 @@ public class SpellChargeEffect implements Effect {
 	}
 
 	public float getLevel() {
-		return (ui.player.spellCharge[ui.spellSlot] + fracCharge) / ui.spell.maxCharges;
+		return (getPlayer().spellCharge[ui.spellSlot] + fracCharge) / ui.spell.maxCharges;
 	}
 
 	public void attack() {
 		PointF sp = new PointF(ui.localToBaseX(ui.getWidth()/2), ui.localToBaseY(ui.getHeight()/2));
-		Effect missile = new MissileEffect(ui.player.opponent(), ui.spell, sp);
+		Effect missile = new MissileEffect(getPlayer().opponent(), ui.spell, sp);
 		GamePane.attackEffects.addEffect(missile);
 	}
 
@@ -49,7 +53,7 @@ public class SpellChargeEffect implements Effect {
 			if(fracCharge>=1f) {
 				fracCharge -= 1f;
 				pendingCharges--;
-				if(ui.player.addCharge(ui.spellSlot)) {
+				if(getPlayer().addCharge(ui.spellSlot)) {
 					attack();
 				}
 			}

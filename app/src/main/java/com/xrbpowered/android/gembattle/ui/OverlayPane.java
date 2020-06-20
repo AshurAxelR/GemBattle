@@ -3,8 +3,12 @@ package com.xrbpowered.android.gembattle.ui;
 import com.xrbpowered.android.zoomui.UIContainer;
 
 public class OverlayPane extends UIContainer {
-	public OverlayPane(UIContainer parent) {
+
+	protected boolean dismissOnTouch;
+
+	public OverlayPane(UIContainer parent, boolean dismissOnTouch) {
 		super(parent);
+		this.dismissOnTouch = dismissOnTouch;
 	}
 
 	@Override
@@ -20,7 +24,8 @@ public class OverlayPane extends UIContainer {
 
 	@Override
 	public boolean onTouchDown(float x, float y) {
-		dismiss();
+		if(dismissOnTouch)
+			dismiss();
 		return true;
 	}
 }

@@ -25,16 +25,16 @@ public class MissileEffect extends Particle {
 	private static final float minAmp = 100f;
 	private static final float maxAmp = 300f;
 	private static final float missileRadius = 25f;
+	private static final float particleDist = 250f;
 
 	private static final float debugDurationScale = 1f;
 
 	public static class Properties {
-		public int color;
 		public float scale = 1f;
 		public float duration = 1f;
 
 		public GemParticleInfo particleInfo = null;
-		public int particlesPerSecond = 200;
+		public int particlesPerSecond = 210;
 	}
 
 	private static final Random random = new Random();
@@ -84,7 +84,7 @@ public class MissileEffect extends Particle {
 				float si = (float) i / count;
 				float x0 = lerp(prevx, newx, si);
 				float y0 = lerp(prevy, newy, si);
-				float d = 250f;
+				float d = (random.nextFloat()+0.5f) * particleDist * props.scale;
 				float r = random.nextFloat() * (float) Math.PI * 2f;
 				float dx = (float) Math.cos(r);
 				float dy = -(float) Math.sin(r);
@@ -122,7 +122,7 @@ public class MissileEffect extends Particle {
 
 	@Override
 	public void draw(Canvas canvas, float x, float y, float ts, Paint paint) {
-		paint.setColor(props.color);
+		paint.setColor(0xffffffff);
 		//canvas.drawCircle(x, y, 10, paint);
 
 		canvas.save();

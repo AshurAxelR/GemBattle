@@ -1,4 +1,4 @@
-<center><img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" /></center>
+<p align="center"><img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" /></p>
 
 # Gem Battle
 

@@ -41,24 +41,24 @@ public class GemParticleInfo {
 			new ColorTween(new int[] {0xffffefd5, 0xff99979e, 0}, new float[] {0, 0.25f, 1})
 		).setAligned();
 	public static final GemParticleInfo fireParticle = new GemParticleInfo(
-			R.drawable.missile_metal,
+			R.drawable.missile_fire,
 			new ColorTween(0xffffc000, 0xffe14500, 0)
 		).setAligned();
 	public static final GemParticleInfo waterParticle = new GemParticleInfo(
-			R.drawable.missile_metal,
+			R.drawable.missile_water,
 			new ColorTween(0xffc3e2ff, 0xff359dff, 0x00ffffff)
 		).setAligned();
 	public static final GemParticleInfo earthParticle = new GemParticleInfo(
-			R.drawable.missile_metal,
+			R.drawable.missile_earth,
 			new ColorTween(0xffc2ee59, 0xff69b20a, 0x0069b20a)
 		).setAligned();
 	public static final GemParticleInfo airParticle = new GemParticleInfo(
-			R.drawable.missile_metal,
+			R.drawable.missile_air,
 			new ColorTween(0xfff6fdff, 0xff96e8ff, 0x00dddddd)
-		).setAligned();
+		).setRotationSpeed(5f);
 	public static final GemParticleInfo lightParticle = new GemParticleInfo(
-			R.drawable.missile_metal,
+			R.drawable.missile_light,
 			new ColorTween(0xffffffff, 0xfffff7cc, 0x00ffe34e)
-		).setAligned();
+		).setRotationSpeed(0.5f);
 
 }

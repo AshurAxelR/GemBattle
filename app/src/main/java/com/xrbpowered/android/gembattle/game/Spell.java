@@ -33,7 +33,7 @@ public class Spell {
 		this.damage = damage;
 
 		this.missileProps.particleInfo = element.particleInfo;
-		this.missileProps.duration = 0.75f;
+		this.missileProps.duration = 0.8f;
 
 		registerSpell(this);
 	}
@@ -66,7 +66,7 @@ public class Spell {
 		Spell spell = new Spell(bitmapEmptyId, bitmapFullId, element.name + " Lance", element, 12, 36);
 		spell.missileProps.particlesPerSecond = 250;
 		spell.missileProps.scale = 1.5f;
-		spell.missileProps.duration = 1.2f;
+		spell.missileProps.duration = 1.25f;
 		return spell;
 	}
 
@@ -85,7 +85,7 @@ public class Spell {
 		{
 			this.missileProps.particlesPerSecond = 90;
 			this.missileProps.scale = 0.5f;
-			this.missileProps.duration = 0.5f;
+			this.missileProps.duration = 0.65f;
 		}
 	};
 

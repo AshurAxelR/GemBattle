@@ -1,4 +1,4 @@
-package com.xrbpowered.android.gembattle.ui;
+package com.xrbpowered.android.gembattle.ui.battle;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,6 +11,7 @@ import android.graphics.Shader;
 import com.xrbpowered.android.gembattle.effects.attack.SpellChargeEffect;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Spell;
+import com.xrbpowered.android.gembattle.ui.TopPane;
 import com.xrbpowered.android.gembattle.ui.common.TapButton;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.UIContainer;
@@ -61,43 +62,48 @@ public class SpellChargeBubble extends TapButton {
 
 	@Override
 	public void onClick() {
-		new SpellInfoPane(GamePane.instance, spell,
+		new SpellInfoPane(TopPane.overlayBase, spell,
 			(playerPane.align==Paint.Align.LEFT ? 1 : -1) * SpellInfoPane.battleAnchorX,
-			GamePane.instance.baseToLocalY(localToBaseY(radius)));
+			TopPane.overlayBase.baseToLocalY(localToBaseY(radius)));
 	}
 
 	@Override
 	public void paint(Canvas canvas) {
 		if(spell!=null) {
 			float bpos = radius-bitmapSize/2;
-			canvas.drawBitmap(spell.bitmapEmpty, bpos, bpos, paint);
-
-			float px = parentToLocalX(SpellPane.pivotx);
-			float py = parentToLocalY(SpellPane.pivoty);
-			float s = chargeEffect.getLevel();
-
-			if(s>0) {
-				float r = distanceFromPivot - radius + s*radius*2;
-				if(grad==null || clipLevel==null || s!=grads) {
-					clipLevel = new Path();
-					clipLevel.addCircle(px, py, r, Path.Direction.CCW);
-					gradStops[1] = (r - 15) / r;
-					grad = new RadialGradient(px, py, r, gradColors, gradStops, RadialGradient.TileMode.CLAMP);
-					grads = s;
-				}
-
-				canvas.save();
-
-				canvas.clipPath(clipLevel);
+			if(playerPane.preview) {
 				canvas.drawBitmap(spell.bitmapFull, bpos, bpos, paint);
+			}
+			else {
+				canvas.drawBitmap(spell.bitmapEmpty, bpos, bpos, paint);
 
-				float a = RenderUtils.wave(GamePane.time/2f + spellSlot/6f);
-				gradPaint.setAlpha((int)(255*a));
-				gradPaint.setShader(grad);
-				canvas.clipPath(clipSpell);
-				canvas.drawCircle(px, py, r, gradPaint);
+				float px = parentToLocalX(SpellPane.pivotx);
+				float py = parentToLocalY(SpellPane.pivoty);
+				float s = chargeEffect.getLevel();
 
-				canvas.restore();
+				if (s > 0) {
+					float r = distanceFromPivot - radius + s * radius * 2;
+					if (grad == null || clipLevel == null || s != grads) {
+						clipLevel = new Path();
+						clipLevel.addCircle(px, py, r, Path.Direction.CCW);
+						gradStops[1] = (r - 15) / r;
+						grad = new RadialGradient(px, py, r, gradColors, gradStops, RadialGradient.TileMode.CLAMP);
+						grads = s;
+					}
+
+					canvas.save();
+
+					canvas.clipPath(clipLevel);
+					canvas.drawBitmap(spell.bitmapFull, bpos, bpos, paint);
+
+					float a = RenderUtils.wave(GamePane.time / 2f + spellSlot / 6f);
+					gradPaint.setAlpha((int) (255 * a));
+					gradPaint.setShader(grad);
+					canvas.clipPath(clipSpell);
+					canvas.drawCircle(px, py, r, gradPaint);
+
+					canvas.restore();
+				}
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package com.xrbpowered.android.gembattle.ui;
+package com.xrbpowered.android.gembattle.ui.battle;
 
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
@@ -10,6 +10,7 @@ import com.xrbpowered.android.gembattle.effects.EffectSet;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.Gem;
+import com.xrbpowered.android.gembattle.ui.TopPane;
 import com.xrbpowered.android.gembattle.ui.common.GlassButton;
 import com.xrbpowered.android.gembattle.ui.common.ProgressBar;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
@@ -18,9 +19,6 @@ import com.xrbpowered.android.zoomui.UIContainer;
 import com.xrbpowered.android.zoomui.UIElement;
 
 public class GamePane extends UIContainer {
-
-	public static final int targetWidth = 1680;
-	public static final int targetHeight = 1080;
 
 	public static GamePane instance;
 	public static float time = 0f;
@@ -37,12 +35,7 @@ public class GamePane extends UIContainer {
 	public final UIElement attackEffectPane;
 	public final PopupMessageFloat popupMessageFloat;
 
-	private boolean paused = false;
-
-	private final LinearGradient bgFill = new LinearGradient(0, 0, targetWidth, 0,
-			new int[] {0xff373833, 0xff000000, 0xff373833},
-			new float[] {0f, 0.5f, 1f},
-			Shader.TileMode.CLAMP);
+	private boolean paused = true;
 
 	private long prevt = 0L;
 
@@ -113,13 +106,14 @@ public class GamePane extends UIContainer {
 
 		popupMessageFloat = new PopupMessageFloat(this);
 
-		startBoard(new Board());
+		//startBoard(new Board());
 	}
 
 	public void startBoard(Board board) {
 		humanPlayerPane.setPlayer(board.humanPlayer);
 		aiPlayerPane.setPlayer(board.aiPlayer);
 		boardPane.startBoard(board);
+		paused = false;
 	}
 
 	public BattlePlayerPane getPlayerPane(BattlePlayer player) {
@@ -190,17 +184,16 @@ public class GamePane extends UIContainer {
 	}
 
 	@Override
+	public boolean isVisible() {
+		return super.isVisible() && boardPane.board!=null;
+	}
+
+	@Override
 	protected void paintSelf(Canvas canvas) {
 		if(!Gem.isLoaded())
 			Gem.loadBitmaps();
 
 		updateTime();
-
-		paint.setColor(0xff000000);
-		paint.setStyle(Paint.Style.FILL);
-		paint.setShader(bgFill);
-		canvas.drawRect(-getX(), -getY(), getWidth()+getX(), getHeight()+getY(), paint);
-		paint.setShader(null);
 
 		paint.setStyle(Paint.Style.FILL);
 		paint.setColor(0xffffffff);

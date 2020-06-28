@@ -1,4 +1,4 @@
-package com.xrbpowered.android.gembattle.ui;
+package com.xrbpowered.android.gembattle.ui.battle;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -28,7 +28,7 @@ public class BoardPane extends UIElement {
 	private static final int diagonalThresholdAngle = 30;
 	private static final float diagonalThreshold = 1f/(float)Math.cos(Math.toRadians(diagonalThresholdAngle));
 
-	public Board board;
+	public Board board = null;
 
 	private final SwitchGem switchGem = new SwitchGem();
 	private Effect effect;

@@ -8,8 +8,8 @@ import com.xrbpowered.android.gembattle.effects.Effect;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Gem;
 import com.xrbpowered.android.gembattle.game.MatchResult;
-import com.xrbpowered.android.gembattle.ui.GamePane;
-import com.xrbpowered.android.gembattle.ui.SpellChargeBubble;
+import com.xrbpowered.android.gembattle.ui.battle.GamePane;
+import com.xrbpowered.android.gembattle.ui.battle.SpellChargeBubble;
 
 public class SpellChargeEffect implements Effect {
 

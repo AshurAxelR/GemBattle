@@ -8,7 +8,7 @@ import android.graphics.RectF;
 
 import com.xrbpowered.android.gembattle.R;
 import com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo;
-import com.xrbpowered.android.gembattle.ui.BoardPane;
+import com.xrbpowered.android.gembattle.ui.battle.BoardPane;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 
 import static com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo.*;

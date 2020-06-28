@@ -1,4 +1,4 @@
-package com.xrbpowered.android.gembattle.ui;
+package com.xrbpowered.android.gembattle.ui.battle;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

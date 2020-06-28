@@ -10,8 +10,8 @@ import com.xrbpowered.android.gembattle.game.AILogic;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.DropColumn;
 import com.xrbpowered.android.gembattle.game.DropGem;
-import com.xrbpowered.android.gembattle.ui.GameOverPane;
-import com.xrbpowered.android.gembattle.ui.GamePane;
+import com.xrbpowered.android.gembattle.ui.battle.GameOverPane;
+import com.xrbpowered.android.gembattle.ui.battle.GamePane;
 
 import static com.xrbpowered.android.gembattle.game.Board.size;
 

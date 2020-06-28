@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 
-import com.xrbpowered.android.gembattle.ui.GamePane;
+import com.xrbpowered.android.gembattle.ui.TopPane;
+import com.xrbpowered.android.gembattle.ui.battle.GamePane;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
 import com.xrbpowered.android.zoomui.BaseView;
 import com.xrbpowered.android.zoomui.RepaintHandler;
@@ -25,7 +26,8 @@ public class MainActivity extends Activity {
 
 		setContentView(R.layout.activity_main);
 		BaseView base = findViewById(R.id.baseview);
-		new GamePane(new UIFitScaleContainer(base.getContainer(), GamePane.targetWidth, GamePane.targetHeight));
+		new TopPane(base.getContainer());
+		//new GamePane(new UIFitScaleContainer(base.getContainer(), GamePane.targetWidth, GamePane.targetHeight));
 
 		repaint = new RepaintHandler(base, frameTime);
 	}

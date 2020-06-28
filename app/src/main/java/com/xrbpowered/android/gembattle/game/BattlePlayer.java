@@ -1,5 +1,7 @@
 package com.xrbpowered.android.gembattle.game;
 
+import java.util.Random;
+
 public class BattlePlayer {
 
 	public static final int humanHealth = 150;
@@ -8,7 +10,7 @@ public class BattlePlayer {
 	public static final int spellSlotCount = 6;
 
 	private static final Spell[] humanSpells = {Spell.metalShard, Spell.airFlash, Spell.earthFlash, Spell.lightLance, Spell.waterFlash, Spell.fireFlash};
-	private static final Spell[] aiSpells = {Spell.metalShard, Spell.airLance, Spell.earthFlash, null, Spell.waterFlash, Spell.fireLance};
+	//private static final Spell[] aiSpells = {Spell.metalShard, Spell.airLance, Spell.earthFlash, null, Spell.waterFlash, Spell.fireLance};
 
 	public final Board board;
 	public final boolean human;
@@ -23,7 +25,7 @@ public class BattlePlayer {
 	public BattlePlayer(Board board, boolean human) {
 		this.board = board;
 		this.human = human;
-		this.spells = human ? humanSpells : aiSpells;
+		this.spells = human ? humanSpells : createAiSpells();
 		this.maxHealth = human ? humanHealth : aiHealth;
 		this.health = maxHealth;
 
@@ -66,5 +68,25 @@ public class BattlePlayer {
 	public Spell spellForElement(Gem element) {
 		int slot = elementMap[element.ordinal()];
 		return slot<0 ? null : spells[slot];
+	}
+
+	private static Random random = new Random();
+	private static Spell[] createAiSpells() {
+		Spell[] spells = new Spell[spellSlotCount];
+
+		int l1, l2;
+		l1 = random.nextInt(4);
+		do {
+			l2 = random.nextInt(4);
+		} while(l1==l2);
+
+		spells[0] = Spell.metalShard;
+		spells[1] = (l1==0 || l2==0) ? Spell.airLance : Spell.airFlash;
+		spells[2] = (l1==1 || l2==1) ? Spell.earthLance : Spell.earthFlash;
+		spells[3] = null;
+		spells[4] = (l1==2 || l2==2) ? Spell.waterLance : Spell.waterFlash;
+		spells[5] = (l1==3 || l2==3) ? Spell.fireLance : Spell.fireFlash;
+
+		return spells;
 	}
 }

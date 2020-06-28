@@ -95,6 +95,8 @@ public class Spell {
 	public static final Spell airFlash = flash(spell_air_flash_empty, spell_air_flash_full, Gem.air);
 
 	public static final Spell fireLance = lance(spell_fire_lance_empty, spell_fire_lance_full, Gem.fire);
+	public static final Spell waterLance = lance(spell_water_lance_empty, spell_water_lance_full, Gem.water);
+	public static final Spell earthLance = lance(spell_earth_lance_empty, spell_earth_lance_full, Gem.earth);
 	public static final Spell airLance = lance(spell_air_lance_empty, spell_air_lance_full, Gem.air);
 	public static final Spell lightLance = lance(spell_light_lance_empty, spell_light_lance_full, Gem.light);
 }

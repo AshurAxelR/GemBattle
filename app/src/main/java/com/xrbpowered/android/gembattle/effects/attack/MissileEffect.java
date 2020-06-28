@@ -11,7 +11,7 @@ import com.xrbpowered.android.gembattle.effects.particles.GemParticleInfo;
 import com.xrbpowered.android.gembattle.effects.particles.Particle;
 import com.xrbpowered.android.gembattle.game.BattlePlayer;
 import com.xrbpowered.android.gembattle.game.Spell;
-import com.xrbpowered.android.gembattle.ui.GamePane;
+import com.xrbpowered.android.gembattle.ui.battle.GamePane;
 import com.xrbpowered.android.zoomui.UIElement;
 
 import java.util.Random;

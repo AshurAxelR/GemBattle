@@ -1,8 +1,9 @@
-package com.xrbpowered.android.gembattle.ui;
+package com.xrbpowered.android.gembattle.ui.battle;
 
 import android.graphics.Canvas;
 
 import com.xrbpowered.android.gembattle.game.Board;
+import com.xrbpowered.android.gembattle.ui.TopPane;
 import com.xrbpowered.android.gembattle.ui.common.GlassButton;
 import com.xrbpowered.android.gembattle.ui.common.OverlayPane;
 import com.xrbpowered.android.gembattle.ui.utils.RenderUtils;
@@ -36,7 +37,10 @@ public class GameOverPane extends OverlayPane {
 			@Override
 			public void onClick() {
 				dismiss();
-				GamePane.instance.startBoard(new Board());
+				//GamePane.instance.startBoard(new Board());
+				BattlePreviewPane bp = TopPane.instance.battlePreview;
+				bp.setBoard(new Board());
+				TopPane.instance.setActive(bp);
 			}
 		};
 		continueButton.setSize(400, continueButton.getHeight());

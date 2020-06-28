@@ -8,7 +8,7 @@ import com.xrbpowered.android.gembattle.effects.TimedEffect;
 import com.xrbpowered.android.gembattle.game.AILogic;
 import com.xrbpowered.android.gembattle.game.Board;
 import com.xrbpowered.android.gembattle.game.SwitchGem;
-import com.xrbpowered.android.gembattle.ui.BoardPane;
+import com.xrbpowered.android.gembattle.ui.battle.BoardPane;
 
 public class AIThinkEffect extends TimedEffect {
 
